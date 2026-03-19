@@ -1,0 +1,1 @@
+ALTER TABLE `url_shortener_user` ADD `is_anonymous` integer DEFAULT false;
