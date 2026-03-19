@@ -16,7 +16,7 @@ A URL shortener built with **TanStack Start** (React + TanStack Router/Query), *
 - **Frontend**: React, TanStack Start, TanStack Router
 - **Data**: TanStack Query
 - **Backend**: Elysia (typed API via `@elysiajs/eden` treaty)
-- **DB**: Drizzle ORM + Turso/libSQL
+- **DB**: Drizzle ORM + Turso/libSQL (local.db supported)
 - **Auth**: `better-auth` (Google + anonymous client plugin)
 
 ## Getting started
@@ -31,7 +31,7 @@ bun install
 
 Copy `.env.example` to `.env` and fill in the required values.
 
-- **Turso DB**: `TURSO_DATABASE_URL` and set `TURSO_AUTH_TOKEN`.
+- **Turso DB**: `TURSO_DATABASE_URL="file:local.db"` and set `TURSO_AUTH_TOKEN=" "` for local development.
 - **Auth**: `BETTER_AUTH_SECRET` is required.
 - **Google OAuth**: `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are required by the current env schema.
 
