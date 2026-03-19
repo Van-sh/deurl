@@ -33,8 +33,11 @@ export const env = createEnv({
    runtimeEnv: {
       ...process.env,
       ...import.meta.env,
-      BETTER_AUTH_URL: process.env.VITE_APP_URL,
-      VITE_API_URL: import.meta.env.VITE_APP_URL,
+      BETTER_AUTH_URL: process.env.VERCEL_URL
+         ? `https://${process.env.VERCEL_URL}`
+         : process.env.VITE_APP_URL,
+      VITE_API_URL:
+         typeof window !== "undefined" ? window.location.origin : process.env.VITE_APP_URL,
 
       VITE_LOG_LEVEL: process.env.NODE_ENV === "development" ? "debug" : "info",
    },

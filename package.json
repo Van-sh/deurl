@@ -7,7 +7,7 @@
       "check": "bun --parallel format:check lint typecheck",
       "cn": "bun --bun shadcn",
       "db": "bun --bun drizzle-kit",
-      "dev": "bun vite dev",
+      "dev": "bun --bun vite dev",
       "format": "bun oxfmt",
       "format:check": "bun oxfmt --check",
       "lint": "bun --bun eslint",
