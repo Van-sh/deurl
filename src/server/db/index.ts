@@ -1,12 +1,15 @@
 import "~/logtape.config";
 
 import { getLogger } from "@logtape/drizzle-orm";
-import { drizzle } from "drizzle-orm/libsql/web";
 
 import { env } from "~/env";
 import * as schema from "./schema";
 import { authRelations } from "./schema/auth.schema";
 import { relations } from "./schema/relations";
+
+const { drizzle } = await (env.TURSO_DATABASE_URL.startsWith("file")
+   ? import("drizzle-orm/libsql/node")
+   : import("drizzle-orm/libsql/web"));
 
 export const db = drizzle({
    connection: {

@@ -15,11 +15,21 @@ const config = defineConfig(({ command }) => {
       server: {
          port: 3000,
       },
+      optimizeDeps: {
+         exclude: ["drizzle-orm/libsql/node"],
+         rolldownOptions: { external: ["drizzle-orm/libsql/node"] },
+      },
       plugins: [
          devtools(),
          tailwindcss(),
          tanstackStart(),
-         isBuild ? nitro() : undefined,
+         isBuild
+            ? nitro({
+                 rolldownConfig: {
+                    external: ["drizzle-orm/libsql/node"],
+                 },
+              })
+            : undefined,
          viteReact(),
          // @ts-ignore idk
          babelPlugin({
