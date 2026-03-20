@@ -12,28 +12,28 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
-import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as redirectsLCodeRouteImport } from './routes/(redirects)/l.$code'
 
-const LoginLazyRouteImport = createFileRoute('/login')()
+const AppIndexLazyRouteImport = createFileRoute('/_app/')()
+const AppLoginLazyRouteImport = createFileRoute('/_app/login')()
 
-const LoginLazyRoute = LoginLazyRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
+const AppIndexLazyRoute = AppIndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any).lazy(() => import('./routes/_app/index.lazy').then((d) => d.Route))
+const AppLoginLazyRoute = AppLoginLazyRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AppRouteRoute,
+} as any).lazy(() => import('./routes/_app/login.lazy').then((d) => d.Route))
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
   path: '/api/$',
@@ -43,7 +43,9 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_app/dashboard.lazy').then((d) => d.Route),
+)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -56,28 +58,28 @@ const redirectsLCodeRoute = redirectsLCodeRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AppIndexRoute
-  '/login': typeof LoginLazyRoute
+  '/': typeof AppIndexLazyRoute
   '/dashboard': typeof AppDashboardRoute
   '/api/$': typeof ApiSplatRoute
+  '/login': typeof AppLoginLazyRoute
   '/l/$code': typeof redirectsLCodeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
-  '/login': typeof LoginLazyRoute
   '/dashboard': typeof AppDashboardRoute
   '/api/$': typeof ApiSplatRoute
-  '/': typeof AppIndexRoute
+  '/login': typeof AppLoginLazyRoute
+  '/': typeof AppIndexLazyRoute
   '/l/$code': typeof redirectsLCodeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
-  '/login': typeof LoginLazyRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/api/$': typeof ApiSplatRoute
-  '/_app/': typeof AppIndexRoute
+  '/_app/login': typeof AppLoginLazyRoute
+  '/_app/': typeof AppIndexLazyRoute
   '/(redirects)/l/$code': typeof redirectsLCodeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -85,19 +87,19 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/dashboard'
     | '/api/$'
+    | '/login'
     | '/l/$code'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/dashboard' | '/api/$' | '/' | '/l/$code' | '/api/auth/$'
+  to: '/dashboard' | '/api/$' | '/login' | '/' | '/l/$code' | '/api/auth/$'
   id:
     | '__root__'
     | '/_app'
-    | '/login'
     | '/_app/dashboard'
     | '/api/$'
+    | '/_app/login'
     | '/_app/'
     | '/(redirects)/l/$code'
     | '/api/auth/$'
@@ -105,7 +107,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  LoginLazyRoute: typeof LoginLazyRoute
   ApiSplatRoute: typeof ApiSplatRoute
   redirectsLCodeRoute: typeof redirectsLCodeRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -113,13 +114,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -131,7 +125,14 @@ declare module '@tanstack/react-router' {
       id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AppIndexRouteImport
+      preLoaderRoute: typeof AppIndexLazyRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/login': {
+      id: '/_app/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AppLoginLazyRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/api/$': {
@@ -167,12 +168,14 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
-  AppIndexRoute: typeof AppIndexRoute
+  AppLoginLazyRoute: typeof AppLoginLazyRoute
+  AppIndexLazyRoute: typeof AppIndexLazyRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
-  AppIndexRoute: AppIndexRoute,
+  AppLoginLazyRoute: AppLoginLazyRoute,
+  AppIndexLazyRoute: AppIndexLazyRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
@@ -181,7 +184,6 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  LoginLazyRoute: LoginLazyRoute,
   ApiSplatRoute: ApiSplatRoute,
   redirectsLCodeRoute: redirectsLCodeRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

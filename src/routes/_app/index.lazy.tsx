@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type SubmitEvent } from "react";
 import { toast } from "sonner";
 
 import { Button } from "~/components/ui/button";
@@ -9,7 +9,7 @@ import { Input } from "~/components/ui/input";
 import { authClient } from "~/lib/auth-client";
 import { createLinkOptions } from "~/query/link";
 
-export const Route = createFileRoute("/_app/")({
+export const Route = createLazyFileRoute("/_app/")({
    component: LandingRouteComponent,
 });
 
@@ -64,7 +64,7 @@ function LandingRouteComponent() {
       }
    }
 
-   async function handleSubmit(event: React.FormEvent) {
+   async function handleSubmit(event: SubmitEvent) {
       event.preventDefault();
       setError(null);
 

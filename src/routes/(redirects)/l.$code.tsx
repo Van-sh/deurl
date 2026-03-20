@@ -23,10 +23,10 @@ const getRedirectUrl = createServerFn({ method: "GET" })
 
       const { linkId, redirectUrl } = res[0];
 
-      await db
-         .update(link)
+      db.update(link)
          .set({ clickCount: sql<number>`${link.clickCount} + 1` })
-         .where(eq(link.id, linkId));
+         .where(eq(link.id, linkId))
+         .execute();
 
       return redirectUrl;
    });

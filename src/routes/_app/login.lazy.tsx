@@ -14,7 +14,7 @@ import {
 import { authClient } from "~/lib/auth-client";
 import { cn } from "~/lib/utils";
 
-export const Route = createLazyFileRoute("/login")({
+export const Route = createLazyFileRoute("/_app/login")({
    component: SignIn,
 });
 
