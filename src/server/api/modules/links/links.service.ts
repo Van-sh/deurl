@@ -1,4 +1,4 @@
-import { eq, getColumns } from "drizzle-orm";
+import { and, eq, getColumns } from "drizzle-orm";
 
 import { db } from "~/server/db";
 import { link } from "~/server/db/schema";
@@ -63,5 +63,9 @@ export abstract class LinkService {
 
          return newLink;
       });
+   }
+
+   static async deleteLinkForUser(userId: string, linkId: number) {
+      await db.delete(link).where(and(eq(link.id, linkId), eq(link.userId, userId)));
    }
 }

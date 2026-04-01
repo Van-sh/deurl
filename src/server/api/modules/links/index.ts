@@ -2,8 +2,8 @@ import Elysia, { StatusMap } from "elysia";
 
 import type { ResponseSchema } from "~api/types";
 import { authPlugin } from "../auth/auth.plugin";
-import { LinkModel } from "./model";
-import { LinkService } from "./service";
+import { LinkModels } from "./links.models";
+import { LinkService } from "./links.service";
 
 export const linksRouter = new Elysia({
    name: "links",
@@ -20,7 +20,7 @@ export const linksRouter = new Elysia({
       },
       {
          response: {
-            [StatusMap["OK"]]: LinkModel.getAllLinksResponse,
+            [StatusMap["OK"]]: LinkModels.getAllLinksResponse,
          } satisfies ResponseSchema,
       },
    )
@@ -41,10 +41,24 @@ export const linksRouter = new Elysia({
          return status("OK", newLink);
       },
       {
-         body: LinkModel.createLinkBody,
+         body: LinkModels.createLinkBody,
          response: {
-            [StatusMap["OK"]]: LinkModel.createLinkSuccess,
-            [StatusMap["Forbidden"]]: LinkModel.createLinkForbidden,
+            [StatusMap["OK"]]: LinkModels.createLinkSuccess,
+            [StatusMap["Forbidden"]]: LinkModels.createLinkForbidden,
          },
+      },
+   )
+   .delete(
+      "/:id",
+      async ({ params, user, status }) => {
+         await LinkService.deleteLinkForUser(user.id, params.id);
+
+         return status("OK", { message: "Link deleted" });
+      },
+      {
+         params: LinkModels.deleteLinkParams,
+         response: {
+            [StatusMap["OK"]]: LinkModels.deleteLinkSuccess,
+         } satisfies ResponseSchema,
       },
    );
