@@ -1,6 +1,7 @@
 import { tanstackConfig } from "@tanstack/eslint-config";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-export default [
+export default defineConfig([
    ...tanstackConfig,
    {
       rules: {
@@ -10,4 +11,5 @@ export default [
          "@typescript-eslint/array-type": "off",
       },
    },
-];
+   globalIgnores([".output/*"]),
+]);

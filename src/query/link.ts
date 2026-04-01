@@ -42,3 +42,23 @@ export const createLinkOptions = (onSuccess: () => void, onError: (error: Error)
       onSuccess,
       onError,
    });
+
+export const deleteLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
+   mutationOptions({
+      mutationFn: async (linkId: number) => {
+         const { data, error } = await api().links({ id: linkId }).delete();
+
+         if (error) {
+            switch (error.status) {
+               case 401:
+                  throw new Error(error.value.message);
+               default:
+                  throw new Error("Something went wrong while deleting the link.");
+            }
+         }
+
+         return data;
+      },
+      onSuccess,
+      onError,
+   });

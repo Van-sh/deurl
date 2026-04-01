@@ -10,7 +10,7 @@ const link = t.Object({
 });
 export type Link = typeof link.static;
 
-export const LinkModel = {
+export const LinkModels = {
    getAllLinksResponse: t.Array(link),
 
    createLinkBody: t.Object({
@@ -25,8 +25,15 @@ export const LinkModel = {
          t.Literal("Anonymous Users can only have one URL"),
       ]),
    }),
+
+   deleteLinkParams: t.Object({
+      id: t.Numeric(),
+   }),
+   deleteLinkSuccess: t.Object({
+      message: t.Literal("Link deleted"),
+   }),
 } as const;
 
-export type LinkModel = {
-   [k in keyof typeof LinkModel]: UnwrapSchema<(typeof LinkModel)[k]>;
+export type LinkModels = {
+   [K in keyof typeof LinkModels]: UnwrapSchema<(typeof LinkModels)[K]>;
 };
