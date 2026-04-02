@@ -10,10 +10,10 @@
       "dev": "bun x --bun vite dev",
       "format": "bun x oxfmt",
       "format:check": "bun x oxfmt --check",
-      "lint": "bun x --bun eslint",
+      "lint": "bun x oxlint",
       "preview": "bun x vite preview",
       "start": "bun run .output/server/index.mjs",
-      "typecheck": "bun x --bun tsgo"
+      "typecheck": "bun x tsgo"
    },
    "dependencies": {
       "@base-ui/react": "^1.3.0",
@@ -49,21 +49,21 @@
    "devDependencies": {
       "@fontsource-variable/geist": "^5.2.8",
       "@rolldown/plugin-babel": "^0.2.2",
+      "@stylistic/eslint-plugin": "^5.10.0",
       "@tailwindcss/vite": "^4.2.2",
       "@tanstack/devtools-vite": "^0.6.0",
-      "@tanstack/eslint-config": "^0.4.0",
       "@types/bun": "^1.3.11",
       "@types/node": "^25.5.0",
       "@types/react": "^19.2.14",
       "@types/react-dom": "^19.2.3",
-      "@typescript-eslint/parser": "^8.57.2",
       "@typescript/native-preview": "^7.0.0-dev.20260329.1",
       "@vitejs/plugin-react": "^6.0.1",
       "babel-plugin-react-compiler": "^1.0.0",
       "drizzle-kit": "^1.0.0-beta.20",
-      "eslint": "^10.1.0",
       "jsdom": "^29.0.1",
       "oxfmt": "^0.42.0",
+      "oxlint": "^1.57.0",
+      "oxlint-tsgolint": "^0.18.1",
       "shadcn": "^4.1.1",
       "tailwindcss": "^4.2.2",
       "vite": "^8.0.3"
