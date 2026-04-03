@@ -1,5 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
+import CreateLink from "~/components/CreateLink";
 import { LinksTable } from "~/components/LinksTable";
 import { Skeleton } from "~/components/ui/skeleton";
 
@@ -13,11 +14,14 @@ function DashboardRouteComponent() {
    return (
       <main className="px-4 py-6">
          <div className="mx-auto flex max-w-5xl flex-col gap-4">
-            <header className="space-y-1">
-               <h1 className="text-2xl font-semibold tracking-tight">Your links</h1>
-               <p className="text-sm text-muted-foreground">
-                  All the links you{"'"}ve shortened, in one place.
-               </p>
+            <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+               <div className="flex flex-col gap-1">
+                  <h1 className="text-2xl font-semibold tracking-tight">Your links</h1>
+                  <p className="text-sm text-muted-foreground">
+                     All the links you{"'"}ve shortened, in one place.
+                  </p>
+               </div>
+               <CreateLink />
             </header>
             <section className="rounded-xl border bg-card p-4">
                <LinksTable />

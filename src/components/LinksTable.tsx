@@ -149,8 +149,14 @@ export function LinksTable() {
                      disabled={isDeleting}
                      onClick={handleDeleteConfirm}
                   >
-                     {isDeleting && <Loader2 className="animate-spin" />}
-                     Delete
+                     {isDeleting ? (
+                        <>
+                           <Loader2 className="animate-spin" />
+                           Deleting...
+                        </>
+                     ) : (
+                        "Delete"
+                     )}
                   </AlertDialogAction>
                </AlertDialogFooter>
             </AlertDialogContent>

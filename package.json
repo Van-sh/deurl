@@ -5,7 +5,7 @@
    "scripts": {
       "build": "bun x --bun vite build",
       "check": "bun --parallel format:check lint typecheck",
-      "cn": "bun x --bun shadcn",
+      "cn": "bun x shadcn",
       "db": "bun x --bun drizzle-kit",
       "dev": "bun x --bun vite dev",
       "format": "bun x oxfmt",

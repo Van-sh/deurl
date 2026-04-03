@@ -82,7 +82,7 @@ function LandingRouteComponent() {
          return;
       }
 
-      await mutateAsync(trimmed);
+      await mutateAsync({ url: trimmed });
    }
 
    return (

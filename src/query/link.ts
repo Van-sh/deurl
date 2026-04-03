@@ -19,10 +19,15 @@ export const getAllLinkOptions = queryOptions({
    },
 });
 
+type CreateLinkInput = {
+   url: string;
+   customCode?: string;
+};
 export const createLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
    mutationOptions({
-      mutationFn: async (url: string) => {
-         const { data, error } = await api().links.post({ url });
+      mutationFn: async ({ url, customCode }: CreateLinkInput) => {
+         const payload = customCode ? { url, customCode } : { url };
+         const { data, error } = await api().links.post(payload);
 
          if (error) {
             switch (error.status) {
