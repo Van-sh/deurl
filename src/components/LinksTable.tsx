@@ -171,83 +171,83 @@ function LinkTableRow(props: {
    
    return (
       <TableRow key={props.link.id}>
-      <TableCell className="max-w-xs truncate">
-      {editing ? (
-         <Input
-         type="text"
-         value={thisLink.originalUrl}
-         onChange={(event) =>
-            setThisLink(() => ({
-               ...thisLink,
-               originalUrl: event.target.value,
-            }))
-         }
-         />
-      ) : (
-         <Button
-         nativeButton={false}
-         render={<a href={props.link.originalUrl} />}
-         variant={"link"}
-         className="text-foreground"
-         >
-         <ExternalLink />
-         {props.link.originalUrl}
-         </Button>
-      )}
-      </TableCell>
-      <TableCell className="max-w-xs truncate">
-      {editing && !session.data?.user.isAnonymous ? (
-         <Input
-         type="text"
-         value={thisLink.code}
-         onChange={(event) =>
-            setThisLink(() => ({
-               ...thisLink,
-               code: event.target.value,
-            }))
-         }
-         />
-      ) : (
-         <span className="w-full">{props.link.code}</span>
-      )}
-      </TableCell>
-      <TableCell>{"clickCount" in props.link ? props.link.clickCount : "-"}</TableCell>
-      <TableCell className="text-right">
-      <div className="flex justify-end gap-2">
-      {editing ? (
-         <>
-         <Button
-         size="icon"
-         variant="outline"
-         onClick={() => handleEdit()}
-         disabled={isPatching}
-         >
-         {isPatching ? <Spinner data-icon="inline-start" /> : <Check />}
-         </Button>
-         <Button size="icon" variant="destructive" onClick={() => setEditing(false)}>
-         <X />
-         </Button>
-         </>
-      ) : (
-         <>
-         <Button size="icon" variant="outline" onClick={() => setEditing(true)}>
-         <Pencil />
-         </Button>
-         <Button size="icon" variant="outline" onClick={() => handleCopy(props.link)}>
-         {copiedLink === props.link.id ? <CopyCheck /> : <Copy />}
-         </Button>
-         <Button
-         size="icon"
-         variant="destructive"
-         // disabled={isDeleting}
-         onClick={(event) => props.onRequestDelete(event)}
-         >
-         <Trash2 />
-         </Button>
-         </>
-      )}
-      </div>
-      </TableCell>
+         <TableCell className="max-w-xs truncate">
+            {editing ? (
+               <Input
+                  type="text"
+                  value={thisLink.originalUrl}
+                  onChange={(event) =>
+                     setThisLink(() => ({
+                        ...thisLink,
+                        originalUrl: event.target.value,
+                     }))
+                  }
+               />
+            ) : (
+               <Button
+                  nativeButton={false}
+                  render={<a href={props.link.originalUrl} />}
+                  variant={"link"}
+                  className="text-foreground"
+               >
+                  <ExternalLink />
+                  {props.link.originalUrl}
+               </Button>
+            )}
+         </TableCell>
+         <TableCell className="max-w-xs truncate">
+            {editing && !session.data?.user.isAnonymous ? (
+               <Input
+                  type="text"
+                  value={thisLink.code}
+                  onChange={(event) =>
+                     setThisLink(() => ({
+                        ...thisLink,
+                        code: event.target.value,
+                     }))
+                  }
+               />
+            ) : (
+               <span className="w-full">{props.link.code}</span>
+            )}
+         </TableCell>
+         <TableCell>{"clickCount" in props.link ? props.link.clickCount : "-"}</TableCell>
+         <TableCell className="text-right">
+            <div className="flex justify-end gap-2">
+               {editing ? (
+                  <>
+                     <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => handleEdit()}
+                        disabled={isPatching}
+                     >
+                        {isPatching ? <Spinner data-icon="inline-start" /> : <Check />}
+                     </Button>
+                     <Button size="icon" variant="destructive" onClick={() => setEditing(false)}>
+                        <X />
+                     </Button>
+                  </>
+               ) : (
+                  <>
+                     <Button size="icon" variant="outline" onClick={() => setEditing(true)}>
+                        <Pencil />
+                     </Button>
+                     <Button size="icon" variant="outline" onClick={() => handleCopy(props.link)}>
+                        {copiedLink === props.link.id ? <CopyCheck /> : <Copy />}
+                     </Button>
+                     <Button
+                        size="icon"
+                        variant="destructive"
+                        // disabled={isDeleting}
+                        onClick={(event) => props.onRequestDelete(event)}
+                     >
+                        <Trash2 />
+                     </Button>
+                  </>
+               )}
+            </div>
+         </TableCell>
       </TableRow>
    );
 }
