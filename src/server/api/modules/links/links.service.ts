@@ -13,17 +13,17 @@ export abstract class LinkService {
    }
 
    static async getLinkForUser(userId: string, linkId: number) {
-      const [thisLink] = await db
+      const result = await db
          .select(linkColumns)
          .from(link)
          .where(and(eq(link.userId, userId), eq(link.id, linkId)))
          .limit(1);
 
-      if (!thisLink) {
+      if (result.length === 0) {
          return null;
       }
 
-      return thisLink;
+      return result[0];
    }
 
    static async getLinkCountForUser(userId: string) {

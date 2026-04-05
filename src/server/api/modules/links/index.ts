@@ -55,7 +55,7 @@ export const linksRouter = new Elysia({
       async ({ params, body, user, status }) => {
          const linkId = parseInt(params.id);
 
-         const thisLink = LinkService.getLinkForUser(user.id, linkId);
+         const thisLink = await LinkService.getLinkForUser(user.id, linkId);
          if (!thisLink) {
             throw status("Forbidden", { message: "You don't own this link" });
          }
