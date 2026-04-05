@@ -12,6 +12,20 @@ export abstract class LinkService {
       return links;
    }
 
+   static async getLinkForUser(userId: string, linkId: number) {
+      const [thisLink] = await db
+         .select(linkColumns)
+         .from(link)
+         .where(and(eq(link.userId, userId), eq(link.id, linkId)))
+         .limit(1);
+
+      if (!thisLink) {
+         return null;
+      }
+
+      return thisLink;
+   }
+
    static async getLinkCountForUser(userId: string) {
       const count = await db.$count(link, eq(link.userId, userId));
 
@@ -63,6 +77,16 @@ export abstract class LinkService {
 
          return newLink;
       });
+   }
+
+   static async patchLink(userId: string, linkId: number, url: string, customCode?: string) {
+      const [patchedLink] = await db
+         .update(link)
+         .set({ originalUrl: url, code: customCode })
+         .where(and(eq(link.userId, userId), eq(link.id, linkId)))
+         .returning(linkColumns);
+
+      return patchedLink;
    }
 
    static async deleteLinkForUser(userId: string, linkId: number) {

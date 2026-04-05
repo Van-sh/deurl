@@ -67,3 +67,28 @@ export const deleteLinkOptions = (onSuccess: () => void, onError: (error: Error)
       onSuccess,
       onError,
    });
+
+export const patchLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
+   mutationOptions({
+      mutationFn: async (linkData: { id: number } & CreateLinkInput) => {
+         const { data, error } = await api().links({ id: linkData.id }).patch({
+            url: linkData.url,
+            customCode: linkData.customCode,
+         });
+         
+         if (error) {
+            switch (error.status) {
+               case 401:
+                  throw new Error(error.value.message);
+               case 403:
+                  throw new Error(error.value.message);
+               default:
+                  throw new Error("Something went wrong while updating data.");
+            }
+         }
+         
+         return data;
+      },
+      onSuccess,
+      onError,
+   });

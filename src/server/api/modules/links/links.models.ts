@@ -26,6 +26,13 @@ export const LinkModels = {
       ]),
    }),
 
+   patchLinkForbidden: t.Object({
+      message: t.Union([
+         t.Literal("Anonymous Users cannot edit custom codes"),
+         t.Literal("You don't own this link"),
+      ]),
+   }),
+
    deleteLinkParams: t.Object({
       id: t.Numeric(),
    }),

@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { Copy, CopyCheck, ExternalLink, Loader2, Trash2 } from "lucide-react";
+import { Copy, CopyCheck, ExternalLink, Loader2, Trash2, Pencil, Check, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { deleteLinkOptions, getAllLinkOptions } from "~/query/link";
+import { deleteLinkOptions, getAllLinkOptions, patchLinkOptions } from "~/query/link";
 import type { Link } from "~api/modules/links/links.models";
 import {
    AlertDialog,
@@ -17,12 +17,13 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Input } from "./ui/input";
+import { authClient } from "~/lib/auth-client";
+import { Spinner } from "./ui/spinner";
 
 export function LinksTable() {
-   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
    const queryClient = useQueryClient();
    const { data } = useSuspenseQuery(getAllLinkOptions);
-   const [copiedLink, setCopiedLink] = useState<number | undefined>(undefined);
    const [pendingDeleteLink, setPendingDeleteLink] = useState<Link | null>(null);
 
    const { mutateAsync: deleteLink, isPending: isDeleting } = useMutation(
@@ -43,16 +44,6 @@ export function LinksTable() {
             You haven{"'"}t created any links yet.
          </div>
       );
-   }
-
-   async function handleCopy(link: Link) {
-      await navigator.clipboard.writeText(`${window.location.origin}/l/${link.code}`);
-      toast.success(`Copied short link to ${link.originalUrl}`);
-      setCopiedLink(link.id);
-      if (timeoutRef.current !== null) {
-         clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => setCopiedLink(undefined), 1000);
    }
 
    async function handleDelete(link: Link) {
@@ -87,36 +78,7 @@ export function LinksTable() {
             </TableHeader>
             <TableBody>
                {data.map((link) => (
-                  <TableRow key={link.id}>
-                     <TableCell className="max-w-xs truncate">
-                        <Button
-                           nativeButton={false}
-                           render={<a href={link.originalUrl} />}
-                           variant={"link"}
-                           className="text-foreground"
-                        >
-                           <ExternalLink />
-                           {link.originalUrl}
-                        </Button>
-                     </TableCell>
-                     <TableCell className="max-w-xs truncate">{link.code}</TableCell>
-                     <TableCell>{"clickCount" in link ? link.clickCount : "-"}</TableCell>
-                     <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                           <Button size="icon" variant="outline" onClick={() => handleCopy(link)}>
-                              {copiedLink === link.id ? <CopyCheck /> : <Copy />}
-                           </Button>
-                           <Button
-                              size="icon"
-                              variant="destructive"
-                              disabled={isDeleting}
-                              onClick={(event) => handleDeleteClick(link, event)}
-                           >
-                              <Trash2 />
-                           </Button>
-                        </div>
-                     </TableCell>
-                  </TableRow>
+                  <LinkTableRow link={link} onRequestDelete={(e) => handleDeleteClick(link, e)} />
                ))}
             </TableBody>
          </Table>
@@ -162,5 +124,130 @@ export function LinksTable() {
             </AlertDialogContent>
          </AlertDialog>
       </>
+   );
+}
+
+function LinkTableRow(props: {
+   link: Link;
+   onRequestDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}) {
+   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+   const [copiedLink, setCopiedLink] = useState<number | undefined>(undefined);
+   const [editing, setEditing] = useState(false);
+   const [thisLink, setThisLink] = useState(props.link);
+   const queryClient = useQueryClient();
+   const session = authClient.useSession();
+   
+   const { mutateAsync: patchLink, isPending: isPatching } = useMutation(
+      patchLinkOptions(
+         () => {
+            queryClient.invalidateQueries({ queryKey: getAllLinkOptions.queryKey });
+            setEditing(false);
+            toast.success("Link updated.");
+         },
+         (error) => {
+            toast.error(error.message);
+         },
+      ),
+   );
+   
+   async function handleEdit() {
+      await patchLink({
+         id: props.link.id,
+         url: thisLink.originalUrl,
+         customCode: session.data?.user.isAnonymous ? undefined : thisLink.code,
+      });
+   }
+   
+   async function handleCopy(link: Link) {
+      await navigator.clipboard.writeText(`${window.location.origin}/l/${link.code}`);
+      toast.success(`Copied short link to ${link.originalUrl}`);
+      setCopiedLink(link.id);
+      if (timeoutRef.current !== null) {
+         clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => setCopiedLink(undefined), 1000);
+   }
+   
+   return (
+      <TableRow key={props.link.id}>
+      <TableCell className="max-w-xs truncate">
+      {editing ? (
+         <Input
+         type="text"
+         value={thisLink.originalUrl}
+         onChange={(event) =>
+            setThisLink(() => ({
+               ...thisLink,
+               originalUrl: event.target.value,
+            }))
+         }
+         />
+      ) : (
+         <Button
+         nativeButton={false}
+         render={<a href={props.link.originalUrl} />}
+         variant={"link"}
+         className="text-foreground"
+         >
+         <ExternalLink />
+         {props.link.originalUrl}
+         </Button>
+      )}
+      </TableCell>
+      <TableCell className="max-w-xs truncate">
+      {editing && !session.data?.user.isAnonymous ? (
+         <Input
+         type="text"
+         value={thisLink.code}
+         onChange={(event) =>
+            setThisLink(() => ({
+               ...thisLink,
+               code: event.target.value,
+            }))
+         }
+         />
+      ) : (
+         <span className="w-full">{props.link.code}</span>
+      )}
+      </TableCell>
+      <TableCell>{"clickCount" in props.link ? props.link.clickCount : "-"}</TableCell>
+      <TableCell className="text-right">
+      <div className="flex justify-end gap-2">
+      {editing ? (
+         <>
+         <Button
+         size="icon"
+         variant="outline"
+         onClick={() => handleEdit()}
+         disabled={isPatching}
+         >
+         {isPatching ? <Spinner data-icon="inline-start" /> : <Check />}
+         </Button>
+         <Button size="icon" variant="destructive" onClick={() => setEditing(false)}>
+         <X />
+         </Button>
+         </>
+      ) : (
+         <>
+         <Button size="icon" variant="outline" onClick={() => setEditing(true)}>
+         <Pencil />
+         </Button>
+         <Button size="icon" variant="outline" onClick={() => handleCopy(props.link)}>
+         {copiedLink === props.link.id ? <CopyCheck /> : <Copy />}
+         </Button>
+         <Button
+         size="icon"
+         variant="destructive"
+         // disabled={isDeleting}
+         onClick={(event) => props.onRequestDelete(event)}
+         >
+         <Trash2 />
+         </Button>
+         </>
+      )}
+      </div>
+      </TableCell>
+      </TableRow>
    );
 }
