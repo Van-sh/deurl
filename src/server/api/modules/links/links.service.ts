@@ -80,9 +80,13 @@ export abstract class LinkService {
    }
 
    static async patchLink(userId: string, linkId: number, url: string, customCode?: string) {
+      const code = customCode
+         ? customCode
+         : toBase64Url(Bun.hash.wyhash(url, BigInt(linkId)));
+
       const [patchedLink] = await db
          .update(link)
-         .set({ originalUrl: url, code: customCode })
+         .set({ originalUrl: url, code })
          .where(and(eq(link.userId, userId), eq(link.id, linkId)))
          .returning(linkColumns);
 

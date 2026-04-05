@@ -18,7 +18,7 @@ export const LinkModels = {
       customCode: t.Optional(t.String()),
    }),
 
-   createLinkSuccess: link,
+   linkSuccess: link,
    createLinkForbidden: t.Object({
       message: t.Union([
          t.Literal("Anonymous Users cannot add custom codes"),

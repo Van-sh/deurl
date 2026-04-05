@@ -44,7 +44,7 @@ export const linksRouter = new Elysia({
       {
          body: LinkModels.createLinkBody,
          response: {
-            [StatusMap["OK"]]: LinkModels.createLinkSuccess,
+            [StatusMap["OK"]]: LinkModels.linkSuccess,
             [StatusMap["Forbidden"]]: LinkModels.createLinkForbidden,
          },
       },
@@ -53,7 +53,7 @@ export const linksRouter = new Elysia({
    .patch(
       "/:id",
       async ({ params, body, user, status }) => {
-         const linkId = parseInt(params.id);
+         const linkId = params.id;
 
          const thisLink = await LinkService.getLinkForUser(user.id, linkId);
          if (!thisLink) {
@@ -74,9 +74,10 @@ export const linksRouter = new Elysia({
          return status("OK", patchedLink);
       },
       {
+         params: LinkModels.deleteLinkParams,
          body: LinkModels.createLinkBody,
          response: {
-            [StatusMap["OK"]]: LinkModels.createLinkSuccess,
+            [StatusMap["OK"]]: LinkModels.linkSuccess,
             [StatusMap["Forbidden"]]: LinkModels.patchLinkForbidden,
          },
       },

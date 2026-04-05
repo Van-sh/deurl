@@ -32,7 +32,6 @@ export const createLinkOptions = (onSuccess: () => void, onError: (error: Error)
          if (error) {
             switch (error.status) {
                case 401:
-                  throw new Error(error.value.message);
                case 403:
                   throw new Error(error.value.message);
                case 422:
@@ -79,9 +78,10 @@ export const patchLinkOptions = (onSuccess: () => void, onError: (error: Error) 
          if (error) {
             switch (error.status) {
                case 401:
-                  throw new Error(error.value.message);
                case 403:
                   throw new Error(error.value.message);
+               case 422:
+                  throw new Error(error.value.summary);
                default:
                   throw new Error("Something went wrong while updating data.");
             }
