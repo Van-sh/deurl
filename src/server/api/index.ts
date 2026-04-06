@@ -2,6 +2,7 @@ import "~/logtape.config";
 
 import { elysiaLogger } from "@logtape/elysia";
 import Elysia from "elysia";
+import { rateLimit } from "elysia-rate-limit";
 
 import { linksRouter } from "./modules/links";
 
@@ -15,4 +16,5 @@ export const app = new Elysia({
          scope: "global",
       }),
    )
+   .use(rateLimit())
    .use(linksRouter);
