@@ -1,11 +1,10 @@
-import { useRef, useState } from "react";
 import { Copy, CopyCheck, ExternalLink, Trash2, Pencil } from "lucide-react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
+
 import type { Link } from "~api/modules/links/links.models";
-
-import { TableCell, TableRow } from "./ui/table";
 import { Button } from "./ui/button";
-
+import { TableCell, TableRow } from "./ui/table";
 
 type LinksTableRowProps = {
    link: Link;
@@ -13,18 +12,18 @@ type LinksTableRowProps = {
    deletingThisLink: boolean;
    onRequestEdit: () => void;
    onRequestDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
+};
 
 export default function LinksTableRow({
    link,
    editingThisLink,
    deletingThisLink,
    onRequestDelete,
-   onRequestEdit
+   onRequestEdit,
 }: LinksTableRowProps) {
    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
    const [copiedLink, setCopiedLink] = useState<number | undefined>(undefined);
-   
+
    async function handleCopy() {
       await navigator.clipboard.writeText(`${window.location.origin}/l/${link.code}`);
       toast.success(`Copied short link to ${link.originalUrl}`);
@@ -34,7 +33,7 @@ export default function LinksTableRow({
       }
       timeoutRef.current = setTimeout(() => setCopiedLink(undefined), 1000);
    }
-   
+
    return (
       <TableRow>
          <TableCell className="max-w-xs truncate">
@@ -63,12 +62,7 @@ export default function LinksTableRow({
                >
                   <Pencil />
                </Button>
-               <Button
-                  size="icon"
-                  variant="outline"
-                  aria-label="copy link"
-                  onClick={handleCopy}
-               >
+               <Button size="icon" variant="outline" aria-label="copy link" onClick={handleCopy}>
                   {copiedLink === link.id ? <CopyCheck /> : <Copy />}
                </Button>
                <Button

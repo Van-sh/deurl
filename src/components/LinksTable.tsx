@@ -2,15 +2,13 @@ import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-q
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { authClient } from "~/lib/auth-client";
 import { deleteLinkOptions, getAllLinkOptions, editLinkOptions } from "~/query/link";
 import type { Link } from "~api/modules/links/links.models";
-
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
-import LinksTableRow from "./LinksTableRow";
-import { authClient } from "~/lib/auth-client";
-
-import EditLinkDialog from "./EditLinkDialog";
 import DeleteLinkDialog from "./DeleteLinkDialog";
+import EditLinkDialog from "./EditLinkDialog";
+import LinksTableRow from "./LinksTableRow";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 export function LinksTable() {
    const queryClient = useQueryClient();
@@ -43,14 +41,14 @@ export function LinksTable() {
          },
       ),
    );
-   
+
    function handleEdit() {
       if (!linkToEdit) return;
 
       editLink({
          id: linkToEdit.id,
          url: linkToEdit.originalUrl,
-         customCode: (session.data && !session.data.user.isAnonymous) ? linkToEdit.code : undefined,
+         customCode: session.data && !session.data.user.isAnonymous ? linkToEdit.code : undefined,
       });
    }
 
@@ -106,23 +104,27 @@ export function LinksTable() {
             </TableBody>
          </Table>
 
-         { pendingDeleteLink && <DeleteLinkDialog
-            whenVisible={!!pendingDeleteLink}
-            currentLink={pendingDeleteLink}
-            isDeleting={isDeleting}
-            onCancel={() => setPendingDeleteLink(null)}
-            onSubmit={handleDeleteConfirm}
-         /> }
+         {pendingDeleteLink && (
+            <DeleteLinkDialog
+               whenVisible={!!pendingDeleteLink}
+               currentLink={pendingDeleteLink}
+               isDeleting={isDeleting}
+               onCancel={() => setPendingDeleteLink(null)}
+               onSubmit={handleDeleteConfirm}
+            />
+         )}
 
-         { linkToEdit && <EditLinkDialog
-            whenVisible={!!linkToEdit}
-            currentLink={linkToEdit}
-            isEditing={isEditing}
-            canEditCode={!!session.data && !session.data.user.isAnonymous}
-            onSetDraft={setLinkToEdit}
-            onSubmit={handleEdit}
-            onCancel={() => setLinkToEdit(null)}
-         /> }
+         {linkToEdit && (
+            <EditLinkDialog
+               whenVisible={!!linkToEdit}
+               currentLink={linkToEdit}
+               isEditing={isEditing}
+               canEditCode={!!session.data && !session.data.user.isAnonymous}
+               onSetDraft={setLinkToEdit}
+               onSubmit={handleEdit}
+               onCancel={() => setLinkToEdit(null)}
+            />
+         )}
       </>
    );
 }

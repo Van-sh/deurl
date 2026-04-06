@@ -1,4 +1,5 @@
 import { Loader2 } from "lucide-react";
+
 import { type Link } from "~api/modules/links/links.models";
 import {
    AlertDialog,
@@ -10,8 +11,8 @@ import {
    AlertDialogHeader,
    AlertDialogTitle,
 } from "./ui/alert-dialog";
-import { Input } from "./ui/input";
 import { Field, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 
 type EditLinkDialogProps = {
    whenVisible: boolean;
@@ -21,7 +22,7 @@ type EditLinkDialogProps = {
    onSubmit: () => void;
    onCancel: () => void;
    onSetDraft: (linkDraft: Link) => void;
-}
+};
 
 export default function EditLinkDialog({
    whenVisible,
@@ -30,63 +31,64 @@ export default function EditLinkDialog({
    currentLink,
    onSetDraft,
    onSubmit,
-   onCancel
+   onCancel,
 }: EditLinkDialogProps) {
    return (
-      <AlertDialog
-            open={whenVisible}
-            onOpenChange={(open) => !open && onCancel()}
-         >
-            <AlertDialogContent size="sm">
-               <AlertDialogHeader>
-                  <AlertDialogTitle>Edit Link</AlertDialogTitle>
-                  <AlertDialogDescription className="w-full">
-                     <Field>
-                        <FieldLabel htmlFor="original-url">URL</FieldLabel>
-                        <Input
-                           id="original-url"
-                           type="text"
-                           value={currentLink.originalUrl}
-                           onChange={(event) =>
-                              onSetDraft({ ...currentLink, originalUrl: event.target.value })
-                           }
-                        />
-                     </Field>
-                  </AlertDialogDescription>
-                  <AlertDialogDescription className="mt-4 text-start w-full">
-                     <Field>
-                        <FieldLabel htmlFor="link-code">Code</FieldLabel>
-                        <Input
-                           type="text"
-                           value={currentLink.code}
-                           onChange={(event) => onSetDraft({ ...currentLink, code: event.target.value }) }
-                           disabled={!canEditCode}
-                        />
-                        {!canEditCode &&
-                           <span className="text-slate-400 text-xs">Anonymous users cannot edit code.</span>
+      <AlertDialog open={whenVisible} onOpenChange={(open) => !open && onCancel()}>
+         <AlertDialogContent size="sm">
+            <AlertDialogHeader>
+               <AlertDialogTitle>Edit Link</AlertDialogTitle>
+               <AlertDialogDescription className="w-full">
+                  <Field>
+                     <FieldLabel htmlFor="original-url">URL</FieldLabel>
+                     <Input
+                        id="original-url"
+                        type="text"
+                        value={currentLink.originalUrl}
+                        onChange={(event) =>
+                           onSetDraft({ ...currentLink, originalUrl: event.target.value })
                         }
-                     </Field>
-                  </AlertDialogDescription>
-               </AlertDialogHeader>
-               <AlertDialogFooter>
-                  <AlertDialogCancel disabled={isEditing}>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                     autoFocus
-                     variant="destructive"
-                     disabled={isEditing}
-                     onClick={onSubmit}
-                  >
-                     {isEditing ? (
-                        <>
-                           <Loader2 className="animate-spin" />
-                           Updating...
-                        </>
-                     ) : (
-                        "Update"
+                     />
+                  </Field>
+               </AlertDialogDescription>
+               <AlertDialogDescription className="mt-4 w-full text-start">
+                  <Field>
+                     <FieldLabel htmlFor="link-code">Code</FieldLabel>
+                     <Input
+                        type="text"
+                        value={currentLink.code}
+                        onChange={(event) =>
+                           onSetDraft({ ...currentLink, code: event.target.value })
+                        }
+                        disabled={!canEditCode}
+                     />
+                     {!canEditCode && (
+                        <span className="text-xs text-slate-400">
+                           Anonymous users cannot edit code.
+                        </span>
                      )}
-                  </AlertDialogAction>
-               </AlertDialogFooter>
-            </AlertDialogContent>
-         </AlertDialog>
-   )
+                  </Field>
+               </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+               <AlertDialogCancel disabled={isEditing}>Cancel</AlertDialogCancel>
+               <AlertDialogAction
+                  autoFocus
+                  variant="destructive"
+                  disabled={isEditing}
+                  onClick={onSubmit}
+               >
+                  {isEditing ? (
+                     <>
+                        <Loader2 className="animate-spin" />
+                        Updating...
+                     </>
+                  ) : (
+                     "Update"
+                  )}
+               </AlertDialogAction>
+            </AlertDialogFooter>
+         </AlertDialogContent>
+      </AlertDialog>
+   );
 }

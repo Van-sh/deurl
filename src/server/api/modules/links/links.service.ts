@@ -80,9 +80,7 @@ export abstract class LinkService {
    }
 
    static async editLink(userId: string, linkId: number, url: string, customCode?: string) {
-      const code = customCode
-         ? customCode
-         : toBase64Url(Bun.hash.wyhash(url, BigInt(linkId)));
+      const code = customCode ? customCode : toBase64Url(Bun.hash.wyhash(url, BigInt(linkId)));
 
       const [editedLink] = await db
          .update(link)

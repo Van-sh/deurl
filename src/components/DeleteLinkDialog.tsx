@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+
 import type { Link } from "~api/modules/links/links.models";
 import {
    AlertDialog,
@@ -9,7 +11,6 @@ import {
    AlertDialogHeader,
    AlertDialogTitle,
 } from "./ui/alert-dialog";
-import { Loader2 } from "lucide-react";
 
 type DeleteLinkDialogProps = {
    whenVisible: boolean;
@@ -17,27 +18,23 @@ type DeleteLinkDialogProps = {
    currentLink: Link;
    onSubmit: () => void;
    onCancel: () => void;
-}
+};
 
 export default function DeleteLinkDialog({
    whenVisible,
    isDeleting,
    currentLink,
    onCancel,
-   onSubmit
+   onSubmit,
 }: DeleteLinkDialogProps) {
    return (
-      <AlertDialog
-         open={whenVisible}
-         onOpenChange={(open) => !open && !isDeleting && onCancel()}
-      >
+      <AlertDialog open={whenVisible} onOpenChange={(open) => !open && !isDeleting && onCancel()}>
          <AlertDialogContent size="sm">
             <AlertDialogHeader>
                <AlertDialogTitle>Delete link?</AlertDialogTitle>
                <AlertDialogDescription>
                   This action can{"'"}t be undone. This will permanently delete{" "}
-                  <span className="text-foreground">{currentLink.code}</span> which leads
-                  to{" "}
+                  <span className="text-foreground">{currentLink.code}</span> which leads to{" "}
                   <a href={currentLink.originalUrl}>{currentLink.originalUrl}.</a>
                </AlertDialogDescription>
                <AlertDialogDescription className="mt-4 text-start">
@@ -57,13 +54,15 @@ export default function DeleteLinkDialog({
                   onClick={() => onSubmit()}
                >
                   {isDeleting ? (
-                  <>
-                     <Loader2 className="animate-spin" /> Deleting...
-                  </>
-                  ) : "Delete"}
+                     <>
+                        <Loader2 className="animate-spin" /> Deleting...
+                     </>
+                  ) : (
+                     "Delete"
+                  )}
                </AlertDialogAction>
             </AlertDialogFooter>
          </AlertDialogContent>
       </AlertDialog>
-   )
+   );
 }

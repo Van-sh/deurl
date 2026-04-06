@@ -24,7 +24,7 @@ type CreateLinkInput = {
    customCode?: string;
 };
 
-type EditLinkInput = { 
+type EditLinkInput = {
    id: number;
 } & CreateLinkInput;
 
@@ -79,7 +79,7 @@ export const editLinkOptions = (onSuccess: () => void, onError: (error: Error) =
             url: linkData.url,
             customCode: linkData.customCode,
          });
-         
+
          if (error) {
             switch (error.status) {
                case 401:
@@ -91,7 +91,7 @@ export const editLinkOptions = (onSuccess: () => void, onError: (error: Error) =
                   throw new Error("Something went wrong while updating data.");
             }
          }
-         
+
          return data;
       },
       onSuccess,
