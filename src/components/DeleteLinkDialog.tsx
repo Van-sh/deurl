@@ -29,7 +29,7 @@ export default function DeleteLinkDialog({
    return (
       <AlertDialog
          open={whenVisible}
-         onOpenChange={(open) => !open && onCancel()}
+         onOpenChange={(open) => !open && !isDeleting && onCancel()}
       >
          <AlertDialogContent size="sm">
             <AlertDialogHeader>
