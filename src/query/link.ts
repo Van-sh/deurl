@@ -1,4 +1,5 @@
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
+import { Prettify } from "elysia/types";
 
 import { api } from "~/lib/api";
 
@@ -24,9 +25,11 @@ type CreateLinkInput = {
    customCode?: string;
 };
 
-type EditLinkInput = {
-   id: number;
-} & CreateLinkInput;
+type EditLinkInput = Prettify<
+   {
+      id: number;
+   } & CreateLinkInput
+>;
 
 export const createLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
    mutationOptions({

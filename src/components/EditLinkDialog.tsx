@@ -1,21 +1,12 @@
-import { Loader2 } from "lucide-react";
-
 import { type Link } from "~api/modules/links/links.models";
-import {
-   AlertDialog,
-   AlertDialogAction,
-   AlertDialogCancel,
-   AlertDialogContent,
-   AlertDialogDescription,
-   AlertDialogFooter,
-   AlertDialogHeader,
-   AlertDialogTitle,
-} from "./ui/alert-dialog";
+import { Button } from "./ui/button";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
+import { Spinner } from "./ui/spinner";
 
 type EditLinkDialogProps = {
-   whenVisible: boolean;
+   open: boolean;
    canEditCode: boolean;
    isEditing: boolean;
    currentLink: Link;
@@ -25,7 +16,7 @@ type EditLinkDialogProps = {
 };
 
 export default function EditLinkDialog({
-   whenVisible,
+   open,
    canEditCode,
    isEditing,
    currentLink,
@@ -34,61 +25,55 @@ export default function EditLinkDialog({
    onCancel,
 }: EditLinkDialogProps) {
    return (
-      <AlertDialog open={whenVisible} onOpenChange={(open) => !open && onCancel()}>
-         <AlertDialogContent size="sm">
-            <AlertDialogHeader>
-               <AlertDialogTitle>Edit Link</AlertDialogTitle>
-               <AlertDialogDescription className="w-full">
-                  <Field>
-                     <FieldLabel htmlFor="original-url">URL</FieldLabel>
-                     <Input
-                        id="original-url"
-                        type="text"
-                        value={currentLink.originalUrl}
-                        onChange={(event) =>
-                           onSetDraft({ ...currentLink, originalUrl: event.target.value })
-                        }
-                     />
-                  </Field>
-               </AlertDialogDescription>
-               <AlertDialogDescription className="mt-4 w-full text-start">
-                  <Field>
-                     <FieldLabel htmlFor="link-code">Code</FieldLabel>
-                     <Input
-                        type="text"
-                        value={currentLink.code}
-                        onChange={(event) =>
-                           onSetDraft({ ...currentLink, code: event.target.value })
-                        }
-                        disabled={!canEditCode}
-                     />
-                     {!canEditCode && (
-                        <span className="text-xs text-slate-400">
-                           Anonymous users cannot edit code.
-                        </span>
-                     )}
-                  </Field>
-               </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-               <AlertDialogCancel disabled={isEditing}>Cancel</AlertDialogCancel>
-               <AlertDialogAction
-                  autoFocus
-                  variant="destructive"
+      <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
+         <DialogContent className="text-sm">
+            <DialogTitle>Edit Link</DialogTitle>
+            <div className="flex w-full flex-col gap-4">
+               <Field>
+                  <FieldLabel htmlFor="original-url">URL</FieldLabel>
+                  <Input
+                     id="original-url"
+                     type="text"
+                     value={currentLink.originalUrl}
+                     onChange={(event) =>
+                        onSetDraft({ ...currentLink, originalUrl: event.target.value })
+                     }
+                  />
+               </Field>
+
+               <Field>
+                  <FieldLabel htmlFor="link-code">Code</FieldLabel>
+                  <Input
+                     type="text"
+                     value={currentLink.code}
+                     onChange={(event) => onSetDraft({ ...currentLink, code: event.target.value })}
+                     disabled={!canEditCode}
+                  />
+                  {!canEditCode && (
+                     <span className="text-xs text-slate-400">
+                        Anonymous users cannot edit code.
+                     </span>
+                  )}
+               </Field>
+            </div>
+
+            <DialogFooter>
+               <DialogClose
                   disabled={isEditing}
-                  onClick={onSubmit}
-               >
+                  render={<Button variant="outline">Close</Button>}
+               />
+               <Button autoFocus variant="destructive" disabled={isEditing} onClick={onSubmit}>
                   {isEditing ? (
                      <>
-                        <Loader2 className="animate-spin" />
+                        <Spinner />
                         Updating...
                      </>
                   ) : (
                      "Update"
                   )}
-               </AlertDialogAction>
-            </AlertDialogFooter>
-         </AlertDialogContent>
-      </AlertDialog>
+               </Button>
+            </DialogFooter>
+         </DialogContent>
+      </Dialog>
    );
 }

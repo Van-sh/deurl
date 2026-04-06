@@ -1,5 +1,3 @@
-import { Loader2 } from "lucide-react";
-
 import type { Link } from "~api/modules/links/links.models";
 import {
    AlertDialog,
@@ -11,9 +9,10 @@ import {
    AlertDialogHeader,
    AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { Spinner } from "./ui/spinner";
 
 type DeleteLinkDialogProps = {
-   whenVisible: boolean;
+   open: boolean;
    isDeleting: boolean;
    currentLink: Link;
    onSubmit: () => void;
@@ -21,14 +20,14 @@ type DeleteLinkDialogProps = {
 };
 
 export default function DeleteLinkDialog({
-   whenVisible,
+   open,
    isDeleting,
    currentLink,
    onCancel,
    onSubmit,
 }: DeleteLinkDialogProps) {
    return (
-      <AlertDialog open={whenVisible} onOpenChange={(open) => !open && !isDeleting && onCancel()}>
+      <AlertDialog open={open} onOpenChange={(isOpen) => !isOpen && !isDeleting && onCancel()}>
          <AlertDialogContent size="sm">
             <AlertDialogHeader>
                <AlertDialogTitle>Delete link?</AlertDialogTitle>
@@ -51,11 +50,11 @@ export default function DeleteLinkDialog({
                   autoFocus
                   variant="destructive"
                   disabled={isDeleting}
-                  onClick={() => onSubmit()}
+                  onClick={onSubmit}
                >
                   {isDeleting ? (
                      <>
-                        <Loader2 className="animate-spin" /> Deleting...
+                        <Spinner /> Deleting...
                      </>
                   ) : (
                      "Delete"

@@ -22,16 +22,18 @@ export default function LinksTableRow({
    onRequestEdit,
 }: LinksTableRowProps) {
    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
-   const [copiedLink, setCopiedLink] = useState<number | undefined>(undefined);
+   const [isCopied, setIsCopied] = useState(false);
 
    async function handleCopy() {
       await navigator.clipboard.writeText(`${window.location.origin}/l/${link.code}`);
       toast.success(`Copied short link to ${link.originalUrl}`);
-      setCopiedLink(link.id);
+      setIsCopied(true);
+
       if (timeoutRef.current !== null) {
          clearTimeout(timeoutRef.current);
       }
-      timeoutRef.current = setTimeout(() => setCopiedLink(undefined), 1000);
+
+      timeoutRef.current = setTimeout(() => setIsCopied(false), 1000);
    }
 
    return (
@@ -53,6 +55,10 @@ export default function LinksTableRow({
          <TableCell>{"clickCount" in link ? link.clickCount : "-"}</TableCell>
          <TableCell className="text-right">
             <div className="flex justify-end gap-2">
+               <Button size="icon" variant="outline" aria-label="copy link" onClick={handleCopy}>
+                  {isCopied ? <CopyCheck /> : <Copy />}
+               </Button>
+
                <Button
                   size="icon"
                   variant="outline"
@@ -62,9 +68,7 @@ export default function LinksTableRow({
                >
                   <Pencil />
                </Button>
-               <Button size="icon" variant="outline" aria-label="copy link" onClick={handleCopy}>
-                  {copiedLink === link.id ? <CopyCheck /> : <Copy />}
-               </Button>
+
                <Button
                   size="icon"
                   variant="destructive"

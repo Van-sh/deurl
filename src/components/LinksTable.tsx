@@ -106,7 +106,7 @@ export function LinksTable() {
 
          {pendingDeleteLink && (
             <DeleteLinkDialog
-               whenVisible={!!pendingDeleteLink}
+               open={!!pendingDeleteLink}
                currentLink={pendingDeleteLink}
                isDeleting={isDeleting}
                onCancel={() => setPendingDeleteLink(null)}
@@ -116,7 +116,7 @@ export function LinksTable() {
 
          {linkToEdit && (
             <EditLinkDialog
-               whenVisible={!!linkToEdit}
+               open={!!linkToEdit}
                currentLink={linkToEdit}
                isEditing={isEditing}
                canEditCode={!!session.data && !session.data.user.isAnonymous}

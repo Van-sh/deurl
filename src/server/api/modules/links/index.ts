@@ -24,7 +24,6 @@ export const linksRouter = new Elysia({
          } satisfies ResponseSchema,
       },
    )
-
    .post(
       "/",
       async ({ body, user, status }) => {
@@ -49,7 +48,6 @@ export const linksRouter = new Elysia({
          },
       },
    )
-
    .patch(
       "/:id",
       async ({ params, body, user, status }) => {
@@ -82,7 +80,6 @@ export const linksRouter = new Elysia({
          },
       },
    )
-
    .delete(
       "/:id",
       async ({ params, user, status }) => {
