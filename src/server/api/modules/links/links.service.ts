@@ -79,18 +79,18 @@ export abstract class LinkService {
       });
    }
 
-   static async patchLink(userId: string, linkId: number, url: string, customCode?: string) {
+   static async editLink(userId: string, linkId: number, url: string, customCode?: string) {
       const code = customCode
          ? customCode
          : toBase64Url(Bun.hash.wyhash(url, BigInt(linkId)));
 
-      const [patchedLink] = await db
+      const [editedLink] = await db
          .update(link)
          .set({ originalUrl: url, code })
          .where(and(eq(link.userId, userId), eq(link.id, linkId)))
          .returning(linkColumns);
 
-      return patchedLink;
+      return editedLink;
    }
 
    static async deleteLinkForUser(userId: string, linkId: number) {

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-q
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { deleteLinkOptions, getAllLinkOptions, patchLinkOptions } from "~/query/link";
+import { deleteLinkOptions, getAllLinkOptions, editLinkOptions } from "~/query/link";
 import type { Link } from "~api/modules/links/links.models";
 
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
@@ -31,8 +31,8 @@ export function LinksTable() {
       ),
    );
 
-   const { mutate: patchLink, isPending: isPatching } = useMutation(
-      patchLinkOptions(
+   const { mutate: editLink, isPending: isEditing } = useMutation(
+      editLinkOptions(
          () => {
             queryClient.invalidateQueries({ queryKey: getAllLinkOptions.queryKey });
             setLinkToEdit(null);
@@ -47,7 +47,7 @@ export function LinksTable() {
    function handleEdit() {
       if (!linkToEdit) return;
 
-      patchLink({
+      editLink({
          id: linkToEdit.id,
          url: linkToEdit.originalUrl,
          customCode: (session.data && !session.data.user.isAnonymous) ? linkToEdit.code : undefined,
@@ -117,7 +117,7 @@ export function LinksTable() {
          { linkToEdit && <EditLinkDialog
             whenVisible={!!linkToEdit}
             currentLink={linkToEdit}
-            isPatching={isPatching}
+            isEditing={isEditing}
             canEditCode={!!session.data && !session.data.user.isAnonymous}
             onSetDraft={(linkDraft) => setLinkToEdit(linkDraft)}
             onSubmit={() => handleEdit()}

@@ -23,6 +23,11 @@ type CreateLinkInput = {
    url: string;
    customCode?: string;
 };
+
+type EditLinkInput = { 
+   id: number;
+} & CreateLinkInput;
+
 export const createLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
    mutationOptions({
       mutationFn: async ({ url, customCode }: CreateLinkInput) => {
@@ -67,9 +72,9 @@ export const deleteLinkOptions = (onSuccess: () => void, onError: (error: Error)
       onError,
    });
 
-export const patchLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
+export const editLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
    mutationOptions({
-      mutationFn: async (linkData: { id: number } & CreateLinkInput) => {
+      mutationFn: async (linkData: EditLinkInput) => {
          const { data, error } = await api().links({ id: linkData.id }).patch({
             url: linkData.url,
             customCode: linkData.customCode,

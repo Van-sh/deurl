@@ -16,7 +16,7 @@ import { Field, FieldLabel } from "./ui/field";
 type EditLinkDialogProps = {
    whenVisible: boolean;
    canEditCode: boolean;
-   isPatching: boolean;
+   isEditing: boolean;
    currentLink: Link;
    onSubmit: () => void;
    onCancel: () => void;
@@ -26,7 +26,7 @@ type EditLinkDialogProps = {
 export default function EditLinkDialog({
    whenVisible,
    canEditCode,
-   isPatching,
+   isEditing,
    currentLink,
    onSetDraft,
    onSubmit,
@@ -69,14 +69,14 @@ export default function EditLinkDialog({
                   </AlertDialogDescription>
                </AlertDialogHeader>
                <AlertDialogFooter>
-                  <AlertDialogCancel disabled={isPatching}>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel disabled={isEditing}>Cancel</AlertDialogCancel>
                   <AlertDialogAction
                      autoFocus
                      variant="destructive"
-                     disabled={isPatching}
+                     disabled={isEditing}
                      onClick={onSubmit}
                   >
-                     {isPatching ? (
+                     {isEditing ? (
                         <>
                            <Loader2 className="animate-spin" />
                            Updating...

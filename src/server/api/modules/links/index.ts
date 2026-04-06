@@ -60,25 +60,25 @@ export const linksRouter = new Elysia({
             throw status("Forbidden", { message: "You don't own this link" });
          }
 
-         let patchedLink;
+         let editedLink;
          if (user.isAnonymous) {
             if (body.customCode) {
                throw status("Forbidden", { message: "Anonymous Users cannot edit custom codes" });
             }
 
-            patchedLink = await LinkService.patchLink(user.id, linkId, body.url);
+            editedLink = await LinkService.editLink(user.id, linkId, body.url);
          } else {
-            patchedLink = await LinkService.patchLink(user.id, linkId, body.url, body.customCode);
+            editedLink = await LinkService.editLink(user.id, linkId, body.url, body.customCode);
          }
 
-         return status("OK", patchedLink);
+         return status("OK", editedLink);
       },
       {
-         params: LinkModels.deleteLinkParams,
+         params: LinkModels.linkIdParams,
          body: LinkModels.createLinkBody,
          response: {
             [StatusMap["OK"]]: LinkModels.linkSuccess,
-            [StatusMap["Forbidden"]]: LinkModels.patchLinkForbidden,
+            [StatusMap["Forbidden"]]: LinkModels.editLinkForbidden,
          },
       },
    )
@@ -91,7 +91,7 @@ export const linksRouter = new Elysia({
          return status("OK", { message: "Link deleted" });
       },
       {
-         params: LinkModels.deleteLinkParams,
+         params: LinkModels.linkIdParams,
          response: {
             [StatusMap["OK"]]: LinkModels.deleteLinkSuccess,
          } satisfies ResponseSchema,
