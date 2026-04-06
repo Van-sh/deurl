@@ -11,6 +11,7 @@ import {
    AlertDialogTitle,
 } from "./ui/alert-dialog";
 import { Input } from "./ui/input";
+import { Field, FieldLabel } from "./ui/field";
 
 type EditLinkDialogProps = {
    whenVisible: boolean;
@@ -39,25 +40,32 @@ export default function EditLinkDialog({
             <AlertDialogContent size="sm">
                <AlertDialogHeader>
                   <AlertDialogTitle>Edit Link</AlertDialogTitle>
-                  <AlertDialogDescription>
-                     <Input
-                        type="text"
-                        value={currentLink.originalUrl}
-                        onChange={(event) =>
-                           onSetDraft({ ...currentLink, originalUrl: event.target.value })
-                        }
-                     />
+                  <AlertDialogDescription className="w-full">
+                     <Field>
+                        <FieldLabel htmlFor="original-url">URL</FieldLabel>
+                        <Input
+                           id="original-url"
+                           type="text"
+                           value={currentLink.originalUrl}
+                           onChange={(event) =>
+                              onSetDraft({ ...currentLink, originalUrl: event.target.value })
+                           }
+                        />
+                     </Field>
                   </AlertDialogDescription>
-                  <AlertDialogDescription className="mt-4 text-start">
-                     {canEditCode ? (
+                  <AlertDialogDescription className="mt-4 text-start w-full">
+                     <Field>
+                        <FieldLabel htmlFor="link-code">Code</FieldLabel>
                         <Input
                            type="text"
                            value={currentLink.code}
                            onChange={(event) => onSetDraft({ ...currentLink, code: event.target.value }) }
+                           disabled={!canEditCode}
                         />
-                     ) : (
-                        <span className="w-full">{currentLink.code}</span>
-                     )}
+                        {!canEditCode &&
+                           <span className="text-slate-400 text-xs">Anonymous users cannot edit code.</span>
+                        }
+                     </Field>
                   </AlertDialogDescription>
                </AlertDialogHeader>
                <AlertDialogFooter>
