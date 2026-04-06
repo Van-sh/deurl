@@ -41,7 +41,7 @@ export default function DeleteLinkDialog({
                   <a href={currentLink.originalUrl}>{currentLink.originalUrl}.</a>
                </AlertDialogDescription>
                <AlertDialogDescription className="mt-4 text-start">
-                  <p className="font-medium text-green-700 dark:text-green-400">PROTIP: </p>
+                  <span className="font-medium text-green-700 dark:text-green-400">PROTIP: </span>
                   <span className="text-sm">
                   You can hold down Shift when clicking <b>delete link</b> to bypass this
                   confirmation entirely
