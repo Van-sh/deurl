@@ -111,7 +111,7 @@ export function LinksTable() {
             currentLink={pendingDeleteLink}
             isDeleting={isDeleting}
             onCancel={() => setPendingDeleteLink(null)}
-            onSubmit={() => handleDeleteConfirm()}
+            onSubmit={handleDeleteConfirm}
          /> }
 
          { linkToEdit && <EditLinkDialog
@@ -119,8 +119,8 @@ export function LinksTable() {
             currentLink={linkToEdit}
             isEditing={isEditing}
             canEditCode={!!session.data && !session.data.user.isAnonymous}
-            onSetDraft={(linkDraft) => setLinkToEdit(linkDraft)}
-            onSubmit={() => handleEdit()}
+            onSetDraft={setLinkToEdit}
+            onSubmit={handleEdit}
             onCancel={() => setLinkToEdit(null)}
          /> }
       </>
