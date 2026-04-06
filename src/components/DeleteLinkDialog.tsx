@@ -43,9 +43,9 @@ export default function DeleteLinkDialog({
                <AlertDialogDescription className="mt-4 text-start">
                   <span className="font-medium text-green-700 dark:text-green-400">PROTIP: </span>
                   <span className="text-sm">
-                  You can hold down Shift when clicking <b>delete link</b> to bypass this
-                  confirmation entirely
-               </span>
+                     You can hold down Shift when clicking <b>delete link</b> to bypass this
+                     confirmation entirely
+                  </span>
                </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
