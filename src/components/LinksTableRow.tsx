@@ -58,17 +58,24 @@ export default function LinksTableRow({
                   size="icon"
                   variant="outline"
                   disabled={editingThisLink}
+                  aria-label="edit link"
                   onClick={() => onRequestEdit()}
                >
                   <Pencil />
                </Button>
-               <Button size="icon" variant="outline" onClick={() => handleCopy()}>
+               <Button
+                  size="icon"
+                  variant="outline"
+                  aria-label="copy link"
+                  onClick={() => handleCopy()}
+               >
                   {copiedLink === link.id ? <CopyCheck /> : <Copy />}
                </Button>
                <Button
                   size="icon"
                   variant="destructive"
                   disabled={deletingThisLink}
+                  aria-label="delete link"
                   onClick={(event) => onRequestDelete(event)}
                >
                   <Trash2 />
