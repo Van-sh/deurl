@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
 import { authClient } from "~/lib/auth-client";
@@ -60,13 +60,9 @@ export function LinksTable() {
       );
    }
 
-   async function handleDelete(link: Link) {
-      await deleteLink(link.id);
-   }
-
-   function handleDeleteClick(link: Link, event: React.MouseEvent<HTMLButtonElement>) {
+   async function handleDeleteClick(link: Link, event: MouseEvent) {
       if (event.shiftKey) {
-         handleDelete(link);
+         await deleteLink(link.id);
          return;
       }
 
@@ -75,7 +71,7 @@ export function LinksTable() {
 
    async function handleDeleteConfirm() {
       if (!pendingDeleteLink) return;
-      await handleDelete(pendingDeleteLink);
+      await deleteLink(pendingDeleteLink.id);
       setPendingDeleteLink(null);
    }
 

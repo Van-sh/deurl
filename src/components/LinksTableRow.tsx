@@ -1,5 +1,5 @@
 import { Copy, CopyCheck, ExternalLink, Trash2, Pencil } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
 import type { Link } from "~api/modules/links/links.models";
@@ -11,7 +11,7 @@ type LinksTableRowProps = {
    editingThisLink: boolean;
    deletingThisLink: boolean;
    onRequestEdit: () => void;
-   onRequestDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
+   onRequestDelete: (e: MouseEvent) => void;
 };
 
 export default function LinksTableRow({
