@@ -17,7 +17,7 @@ export function LinksTable() {
    const [pendingDeleteLink, setPendingDeleteLink] = useState<Link | null>(null);
    const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
 
-   const userCanEditCode = sessData?.user.isAnonymous === false
+   const userCanEditCode = sessData?.user.isAnonymous === false;
 
    const { mutateAsync: deleteLink, isPending: isDeleting } = useMutation(
       deleteLinkOptions(
