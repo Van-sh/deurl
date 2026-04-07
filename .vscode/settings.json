@@ -25,6 +25,7 @@
    "files.watcherExclude": {
       "**/routeTree.gen.ts": true
    },
+   "oxc.configPath": "oxlint.config.ts",
    "oxc.fmt.configPath": "oxfmt.config.ts",
    "search.exclude": {
       "**/routeTree.gen.ts": true
