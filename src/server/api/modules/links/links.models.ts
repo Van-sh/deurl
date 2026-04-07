@@ -18,7 +18,7 @@ export const LinkModels = {
       customCode: t.Optional(t.String()),
    }),
 
-   createLinkSuccess: link,
+   linkSuccess: link,
    createLinkForbidden: t.Object({
       message: t.Union([
          t.Literal("Anonymous Users cannot add custom codes"),
@@ -26,7 +26,14 @@ export const LinkModels = {
       ]),
    }),
 
-   deleteLinkParams: t.Object({
+   editLinkForbidden: t.Object({
+      message: t.Union([
+         t.Literal("Anonymous Users cannot edit custom codes"),
+         t.Literal("You don't own this link"),
+      ]),
+   }),
+
+   linkIdParams: t.Object({
       id: t.Numeric(),
    }),
    deleteLinkSuccess: t.Object({

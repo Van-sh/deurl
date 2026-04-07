@@ -12,6 +12,20 @@ export abstract class LinkService {
       return links;
    }
 
+   static async getLinkForUser(userId: string, linkId: number) {
+      const result = await db
+         .select(linkColumns)
+         .from(link)
+         .where(and(eq(link.userId, userId), eq(link.id, linkId)))
+         .limit(1);
+
+      if (result.length === 0) {
+         return null;
+      }
+
+      return result[0];
+   }
+
    static async getLinkCountForUser(userId: string) {
       const count = await db.$count(link, eq(link.userId, userId));
 
@@ -63,6 +77,18 @@ export abstract class LinkService {
 
          return newLink;
       });
+   }
+
+   static async editLink(userId: string, linkId: number, url: string, customCode?: string) {
+      const code = customCode ? customCode : toBase64Url(Bun.hash.wyhash(url, BigInt(linkId)));
+
+      const [editedLink] = await db
+         .update(link)
+         .set({ originalUrl: url, code })
+         .where(and(eq(link.userId, userId), eq(link.id, linkId)))
+         .returning(linkColumns);
+
+      return editedLink;
    }
 
    static async deleteLinkForUser(userId: string, linkId: number) {

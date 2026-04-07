@@ -5,6 +5,9 @@
    "[json]": {
       "editor.defaultFormatter": "oxc.oxc-vscode"
    },
+   "[jsonc]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+   },
    "[typescript]": {
       "editor.defaultFormatter": "oxc.oxc-vscode"
    },
@@ -15,14 +18,15 @@
       "editor.defaultFormatter": "oxc.oxc-vscode"
    },
    "editor.defaultFormatter": "oxc.oxc-vscode",
+   "editor.formatOnSave": true,
    "files.readonlyInclude": {
       "**/routeTree.gen.ts": true
    },
    "files.watcherExclude": {
       "**/routeTree.gen.ts": true
    },
+   "oxc.configPath": "oxlint.config.ts",
    "oxc.fmt.configPath": "oxfmt.config.ts",
-   "editor.formatOnSave": true,
    "search.exclude": {
       "**/routeTree.gen.ts": true
    }
