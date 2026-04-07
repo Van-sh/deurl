@@ -1,5 +1,5 @@
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
-import { Prettify } from "elysia/types";
+import type { Prettify } from "elysia/types";
 
 import { api } from "~/lib/api";
 

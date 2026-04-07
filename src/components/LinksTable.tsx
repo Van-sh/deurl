@@ -62,7 +62,7 @@ export function LinksTable() {
       );
    }
 
-   async function handleDeleteClick(link: Link, event: MouseEvent<HTMLButtonElement>) {
+   function handleDeleteClick(link: Link, event: MouseEvent<HTMLButtonElement>) {
       if (event.shiftKey) {
          deleteLink(link.id);
          return;
