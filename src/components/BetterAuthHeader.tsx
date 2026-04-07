@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { useTheme } from "better-themes";
+import { Computer, Moon, Sun } from "lucide-react";
 
 import { authClient } from "~/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -9,11 +11,14 @@ import {
    DropdownMenuGroup,
    DropdownMenuItem,
    DropdownMenuLabel,
+   DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Skeleton } from "./ui/skeleton";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 export default function BetterAuthHeader() {
+   const { theme, setTheme } = useTheme();
    const { data: session, isPending } = authClient.useSession();
    const user = session?.user;
 
@@ -50,6 +55,32 @@ export default function BetterAuthHeader() {
                      <span className="truncate text-muted-foreground">{user.email}</span>
                   )}
                </DropdownMenuLabel>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup className="flex items-center justify-between">
+               <DropdownMenuLabel className="text-sm font-normal text-foreground">
+                  Theme
+               </DropdownMenuLabel>
+               <ToggleGroup
+                  size={"sm"}
+                  variant={"outline"}
+                  multiple={false}
+                  value={[theme!]}
+                  onValueChange={(newTheme) => setTheme(newTheme[0])}
+               >
+                  <ToggleGroupItem value={"system"}>
+                     <Computer />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value={"light"}>
+                     <Sun />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value={"dark"}>
+                     <Moon />
+                  </ToggleGroupItem>
+               </ToggleGroup>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
                {isAnonymous && (
                   <DropdownMenuItem render={<Link to="/login" className="cursor-pointer" />}>
                      Link account

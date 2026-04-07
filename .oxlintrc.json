@@ -1,17 +1,17 @@
-import { defineConfig } from "oxlint";
+{
+   "$schema": "./node_modules/oxlint/configuration_schema.json",
 
-export default defineConfig({
-   plugins: ["import", "typescript"],
-   categories: {
-      correctness: "off",
+   "plugins": ["import", "typescript"],
+   "categories": {
+      "correctness": "off"
    },
-   options: {
-      typeAware: true,
+   "options": {
+      "typeAware": true
    },
-   env: {
-      builtin: true,
+   "env": {
+      "builtin": true
    },
-   ignorePatterns: [
+   "ignorePatterns": [
       "**/.nx/**",
       "**/.svelte-kit/**",
       "**/build/**",
@@ -19,13 +19,13 @@ export default defineConfig({
       "**/dist/**",
       "**/snap/**",
       "**/vite.config.*.timestamp-*.*",
-      ".output/*",
+      ".output/*"
    ],
-   rules: {},
-   overrides: [
+   "rules": {},
+   "overrides": [
       {
-         files: ["**/*.{js,ts,tsx}"],
-         rules: {
+         "files": ["**/*.{js,ts,tsx}"],
+         "rules": {
             "for-direction": "error",
             "no-async-promise-executor": "error",
             "no-case-declarations": "error",
@@ -73,14 +73,14 @@ export default defineConfig({
                "error",
                {
                   "ts-expect-error": false,
-                  "ts-ignore": "allow-with-description",
-               },
+                  "ts-ignore": "allow-with-description"
+               }
             ],
             "@typescript-eslint/consistent-type-imports": [
                "error",
                {
-                  prefer: "type-imports",
-               },
+                  "prefer": "type-imports"
+               }
             ],
             "@typescript-eslint/no-duplicate-enum-values": "error",
             "@typescript-eslint/no-extra-non-null-assertion": "error",
@@ -88,8 +88,8 @@ export default defineConfig({
             "@typescript-eslint/no-inferrable-types": [
                "error",
                {
-                  ignoreParameters: true,
-               },
+                  "ignoreParameters": true
+               }
             ],
             "@typescript-eslint/no-misused-new": "error",
             "@typescript-eslint/no-namespace": "error",
@@ -105,17 +105,17 @@ export default defineConfig({
             "import/first": "error",
             "import/no-commonjs": "error",
             "import/no-duplicates": "error",
-            "@stylistic/spaced-comment": "error",
+            "@stylistic/spaced-comment": "error"
          },
-         jsPlugins: ["@stylistic/eslint-plugin"],
-         env: {
-            es2020: true,
-            browser: true,
-         },
+         "jsPlugins": ["@stylistic/eslint-plugin"],
+         "env": {
+            "es2020": true,
+            "browser": true
+         }
       },
       {
-         files: ["**/*.vue"],
-         rules: {
+         "files": ["**/*.vue"],
+         "rules": {
             "for-direction": "error",
             "no-async-promise-executor": "error",
             "no-case-declarations": "error",
@@ -163,14 +163,14 @@ export default defineConfig({
                "error",
                {
                   "ts-expect-error": false,
-                  "ts-ignore": "allow-with-description",
-               },
+                  "ts-ignore": "allow-with-description"
+               }
             ],
             "@typescript-eslint/consistent-type-imports": [
                "error",
                {
-                  prefer: "type-imports",
-               },
+                  "prefer": "type-imports"
+               }
             ],
             "@typescript-eslint/no-duplicate-enum-values": "error",
             "@typescript-eslint/no-extra-non-null-assertion": "error",
@@ -178,8 +178,8 @@ export default defineConfig({
             "@typescript-eslint/no-inferrable-types": [
                "error",
                {
-                  ignoreParameters: true,
-               },
+                  "ignoreParameters": true
+               }
             ],
             "@typescript-eslint/no-misused-new": "error",
             "@typescript-eslint/no-namespace": "error",
@@ -195,12 +195,12 @@ export default defineConfig({
             "import/first": "error",
             "import/no-commonjs": "error",
             "import/no-duplicates": "error",
-            "@stylistic/spaced-comment": "error",
+            "@stylistic/spaced-comment": "error"
          },
-         jsPlugins: ["@stylistic/eslint-plugin"],
-         env: {
-            browser: true,
-         },
-      },
-   ],
-});
+         "jsPlugins": ["@stylistic/eslint-plugin"],
+         "env": {
+            "browser": true
+         }
+      }
+   ]
+}

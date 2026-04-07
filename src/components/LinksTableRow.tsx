@@ -1,4 +1,4 @@
-import { Copy, CopyCheck, ExternalLink, Trash2, Pencil } from "lucide-react";
+import { Copy, CopyCheck, ExternalLink, Pencil, Trash2 } from "lucide-react";
 import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 

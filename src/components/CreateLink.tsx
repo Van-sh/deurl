@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useId, useState, type SubmitEvent } from "react";
 import { toast } from "sonner";
 
@@ -16,6 +16,7 @@ import {
 } from "./ui/dialog";
 import { Field, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
+import { Spinner } from "./ui/spinner";
 
 export default function CreateLink() {
    const queryClient = useQueryClient();
@@ -113,14 +114,8 @@ export default function CreateLink() {
                      Cancel
                   </Button>
                   <Button type="submit" disabled={isCreating}>
-                     {isCreating ? (
-                        <>
-                           <Loader2 className="animate-spin" />
-                           Creating...
-                        </>
-                     ) : (
-                        "Create"
-                     )}
+                     {isCreating && <Spinner />}
+                     Create
                   </Button>
                </DialogFooter>
             </form>
