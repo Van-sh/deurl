@@ -12,10 +12,12 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 export function LinksTable() {
    const queryClient = useQueryClient();
-   const session = authClient.useSession();
-   const { data } = useSuspenseQuery(getAllLinkOptions);
+   const { data: sessData } = authClient.useSession();
+   const { data: links } = useSuspenseQuery(getAllLinkOptions);
    const [pendingDeleteLink, setPendingDeleteLink] = useState<Link | null>(null);
    const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
+
+   const userCanEditCode = sessData?.user.isAnonymous === false
 
    const { mutateAsync: deleteLink, isPending: isDeleting } = useMutation(
       deleteLinkOptions(
@@ -48,11 +50,11 @@ export function LinksTable() {
       editLink({
          id: linkToEdit.id,
          url: linkToEdit.originalUrl,
-         customCode: session.data && !session.data.user.isAnonymous ? linkToEdit.code : undefined,
+         customCode: userCanEditCode ? linkToEdit.code : undefined,
       });
    }
 
-   if (data.length === 0) {
+   if (links.length === 0) {
       return (
          <div className="rounded-lg border border-dashed border-border px-4 py-6 text-center text-sm text-muted-foreground">
             You haven{"'"}t created any links yet.
@@ -87,7 +89,7 @@ export function LinksTable() {
                </TableRow>
             </TableHeader>
             <TableBody>
-               {data.map((link) => (
+               {links.map((link) => (
                   <LinksTableRow
                      key={link.id}
                      link={link}
@@ -115,7 +117,7 @@ export function LinksTable() {
                open={!!linkToEdit}
                currentLink={linkToEdit}
                isEditing={isEditing}
-               canEditCode={!!session.data && !session.data.user.isAnonymous}
+               canEditCode={userCanEditCode}
                onSetDraft={setLinkToEdit}
                onSubmit={handleEdit}
                onCancel={() => setLinkToEdit(null)}
