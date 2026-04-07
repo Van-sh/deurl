@@ -20,16 +20,13 @@ export const getAllLinkOptions = queryOptions({
    },
 });
 
-type CreateLinkInput = {
+type EditLinkInput = {
+   id: number;
    url: string;
    customCode?: string;
 };
 
-type EditLinkInput = Prettify<
-   {
-      id: number;
-   } & CreateLinkInput
->;
+type CreateLinkInput = Prettify<Omit<EditLinkInput, "id">>;
 
 export const createLinkOptions = (onSuccess: () => void, onError: (error: Error) => void) =>
    mutationOptions({

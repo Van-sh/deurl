@@ -14,7 +14,7 @@ import { Spinner } from "./ui/spinner";
 type DeleteLinkDialogProps = {
    open: boolean;
    isDeleting: boolean;
-   currentLink: Link;
+   currentLink: Link | null;
    onSubmit: () => void;
    onCancel: () => void;
 };
@@ -31,11 +31,13 @@ export default function DeleteLinkDialog({
          <AlertDialogContent size="sm">
             <AlertDialogHeader>
                <AlertDialogTitle>Delete link?</AlertDialogTitle>
-               <AlertDialogDescription>
-                  This action can{"'"}t be undone. This will permanently delete{" "}
-                  <span className="text-foreground">{currentLink.code}</span> which leads to{" "}
-                  <a href={currentLink.originalUrl}>{currentLink.originalUrl}.</a>
-               </AlertDialogDescription>
+               {currentLink && (
+                  <AlertDialogDescription>
+                     This action can{"'"}t be undone. This will permanently delete{" "}
+                     <span className="text-foreground">{currentLink.code}</span> which leads to{" "}
+                     <a href={currentLink.originalUrl}>{currentLink.originalUrl}.</a>
+                  </AlertDialogDescription>
+               )}
                <AlertDialogDescription className="mt-4 text-start">
                   <span className="font-medium text-green-700 dark:text-green-400">PROTIP: </span>
                   <span className="text-sm">

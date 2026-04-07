@@ -11,7 +11,7 @@ type LinksTableRowProps = {
    editingThisLink: boolean;
    deletingThisLink: boolean;
    onRequestEdit: () => void;
-   onRequestDelete: (e: MouseEvent) => void;
+   onRequestDelete: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function LinksTableRow({
@@ -21,19 +21,13 @@ export default function LinksTableRow({
    onRequestDelete,
    onRequestEdit,
 }: LinksTableRowProps) {
-   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
    const [isCopied, setIsCopied] = useState(false);
 
    async function handleCopy() {
       await navigator.clipboard.writeText(`${window.location.origin}/l/${link.code}`);
       toast.success(`Copied short link to ${link.originalUrl}`);
       setIsCopied(true);
-
-      if (timeoutRef.current !== null) {
-         clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => setIsCopied(false), 1000);
+      setTimeout(() => setIsCopied(false), 1000);
    }
 
    return (

@@ -12,12 +12,12 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 export function LinksTable() {
    const queryClient = useQueryClient();
-   const { data: sessData } = authClient.useSession();
+   const { data: session } = authClient.useSession();
    const { data: links } = useSuspenseQuery(getAllLinkOptions);
    const [pendingDeleteLink, setPendingDeleteLink] = useState<Link | null>(null);
    const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
 
-   const userCanEditCode = sessData?.user.isAnonymous === false;
+   const userCanEditCode = session?.user.isAnonymous === false;
 
    const { mutateAsync: deleteLink, isPending: isDeleting } = useMutation(
       deleteLinkOptions(
@@ -62,7 +62,7 @@ export function LinksTable() {
       );
    }
 
-   async function handleDeleteClick(link: Link, event: MouseEvent) {
+   async function handleDeleteClick(link: Link, event: MouseEvent<HTMLButtonElement>) {
       if (event.shiftKey) {
          await deleteLink(link.id);
          return;
@@ -102,27 +102,23 @@ export function LinksTable() {
             </TableBody>
          </Table>
 
-         {pendingDeleteLink && (
-            <DeleteLinkDialog
-               open={!!pendingDeleteLink}
-               currentLink={pendingDeleteLink}
-               isDeleting={isDeleting}
-               onCancel={() => setPendingDeleteLink(null)}
-               onSubmit={handleDeleteConfirm}
-            />
-         )}
+         <DeleteLinkDialog
+            open={!!pendingDeleteLink}
+            currentLink={pendingDeleteLink}
+            isDeleting={isDeleting}
+            onCancel={() => setPendingDeleteLink(null)}
+            onSubmit={handleDeleteConfirm}
+         />
 
-         {linkToEdit && (
-            <EditLinkDialog
-               open={!!linkToEdit}
-               currentLink={linkToEdit}
-               isEditing={isEditing}
-               canEditCode={userCanEditCode}
-               onSetDraft={setLinkToEdit}
-               onSubmit={handleEdit}
-               onCancel={() => setLinkToEdit(null)}
-            />
-         )}
+         <EditLinkDialog
+            open={!!linkToEdit}
+            currentLink={linkToEdit}
+            isEditing={isEditing}
+            canEditCode={userCanEditCode}
+            onSetDraft={setLinkToEdit}
+            onSubmit={handleEdit}
+            onCancel={() => setLinkToEdit(null)}
+         />
       </>
    );
 }
