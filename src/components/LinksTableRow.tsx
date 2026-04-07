@@ -1,5 +1,5 @@
 import { Copy, CopyCheck, ExternalLink, Trash2, Pencil } from "lucide-react";
-import { useRef, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
 import type { Link } from "~api/modules/links/links.models";
