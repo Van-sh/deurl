@@ -24,10 +24,6 @@ export default function EditLinkDialog({
    onSubmit,
    onCancel,
 }: EditLinkDialogProps) {
-   if (currentLink === null) {
-      return;
-   }
-
    return (
       <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
          <DialogContent>
