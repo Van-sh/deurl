@@ -49,13 +49,13 @@ export default function LinksTableRow({
          <TableCell>{"clickCount" in link ? link.clickCount : "-"}</TableCell>
          <TableCell className="text-right">
             <div className="flex justify-end gap-2">
-               <Button size="icon" variant="outline" aria-label="copy link" onClick={handleCopy}>
+               <Button size="icon" variant="secondary" aria-label="copy link" onClick={handleCopy}>
                   {isCopied ? <CopyCheck /> : <Copy />}
                </Button>
 
                <Button
                   size="icon"
-                  variant="outline"
+                  variant="secondary"
                   disabled={editingThisLink}
                   aria-label="edit link"
                   onClick={onRequestEdit}

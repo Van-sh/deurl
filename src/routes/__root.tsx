@@ -31,6 +31,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             rel: "stylesheet",
             href: appCss,
          },
+         {
+            rel: "icon",
+            href: "favicon.svg",
+         },
       ],
    }),
    shellComponent: RootDocument,

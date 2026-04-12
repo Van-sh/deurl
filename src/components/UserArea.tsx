@@ -17,7 +17,7 @@ import {
 import { Skeleton } from "./ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
-export default function BetterAuthHeader() {
+export default function UserArea() {
    const { theme, setTheme } = useTheme();
    const { data: session, isPending } = authClient.useSession();
    const user = session?.user;

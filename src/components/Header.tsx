@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { env } from "~/env";
-import BetterAuthHeader from "./BetterAuthHeader";
+import UserArea from "./UserArea";
 
 export default function Header() {
    return (
@@ -10,7 +10,7 @@ export default function Header() {
             <Link to="/" className="flex items-center gap-2">
                {env.VITE_APP_NAME}
             </Link>
-            <BetterAuthHeader />
+            <UserArea />
          </div>
       </header>
    );

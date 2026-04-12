@@ -3,7 +3,7 @@ import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
 import { authClient } from "~/lib/auth-client";
-import { deleteLinkOptions, getAllLinkOptions, editLinkOptions } from "~/query/link";
+import { deleteLinkOptions, editLinkOptions, getAllLinkOptions } from "~/query/link";
 import type { Link } from "~api/modules/links/links.models";
 import DeleteLinkDialog from "./DeleteLinkDialog";
 import EditLinkDialog from "./EditLinkDialog";
