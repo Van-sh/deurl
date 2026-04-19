@@ -8,10 +8,9 @@
       "cn": "bun x shadcn",
       "db": "bun x --bun drizzle-kit",
       "dev": "bun x --bun vite dev",
-      "format": "bun x --bun oxfmt",
-      "format:check": "bun x --bun oxfmt --check",
-      "lint": "bun x --bun oxlint",
-      "preview": "bun x vite preview",
+      "format": "bun x oxfmt",
+      "format:check": "bun x oxfmt --check",
+      "lint": "bun x oxlint",
       "start": "bun run .output/server/index.mjs",
       "typecheck": "bun x tsgo"
    },
