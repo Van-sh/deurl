@@ -7,7 +7,11 @@ import { db } from "~db";
 import { link } from "~db/schema";
 
 const getRedirectUrl = createServerFn({ method: "GET" })
-   .inputValidator(z.object({ code: z.base64url() }))
+   .inputValidator(
+      z.object({
+         code: z.base64url(),
+      }),
+   )
    .handler(async ({ data: { code } }) => {
       const res = await db
          .select({
