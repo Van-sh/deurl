@@ -15,7 +15,7 @@ A URL shortener built with **TanStack Start** (React + TanStack Router/Query), *
 - **Runtime**: Bun
 - **Frontend**: React, TanStack Start, TanStack Router
 - **Data**: TanStack Query
-- **Backend**: Elysia (typed API via `@elysiajs/eden` treaty)
+- **Backend**: Elysia (typed API via `@elysia/eden` treaty)
 - **DB**: Drizzle ORM + Turso/libSQL (local.db supported)
 - **Auth**: `better-auth` (Google + anonymous client plugin)
 

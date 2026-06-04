@@ -1,4 +1,4 @@
-import { treaty } from "@elysiajs/eden";
+import { treaty } from "@elysia/eden";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 
