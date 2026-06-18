@@ -8,9 +8,9 @@
         "@base-ui/react": "^1.5.0",
         "@elysia/eden": "^1.4.10",
         "@libsql/client": "^0.17.3",
-        "@logtape/drizzle-orm": "^2.1.1",
-        "@logtape/elysia": "^2.1.1",
-        "@logtape/logtape": "^2.1.1",
+        "@logtape/drizzle-orm": "^2.2.0-dev.760",
+        "@logtape/elysia": "^2.2.0-dev.760",
+        "@logtape/logtape": "^2.2.0-dev.760",
         "@t3-oss/env-core": "^0.13.11",
         "@tanstack/react-devtools": "^0.10.5",
         "@tanstack/react-query": "^5.100.14",
@@ -340,11 +340,11 @@
 
     "@libsql/win32-x64-msvc": ["@libsql/win32-x64-msvc@0.5.29", "", { "os": "win32", "cpu": "x64" }, "sha512-4/0CvEdhi6+KjMxMaVbFM2n2Z44escBRoEYpR+gZg64DdetzGnYm8mcNLcoySaDJZNaBd6wz5DNdgRmcI4hXcg=="],
 
-    "@logtape/drizzle-orm": ["@logtape/drizzle-orm@2.1.1", "", { "peerDependencies": { "@logtape/logtape": "^2.1.1" } }, "sha512-x+DEwnHSF2bPUN6MyZEDAutJDNKroW48O+WTNG+qEK/HToPBeDTW3kWEBtxyUm5HVrGsXOdZRH1k69f5nvtZKw=="],
+    "@logtape/drizzle-orm": ["@logtape/drizzle-orm@2.2.0-dev.760", "", { "peerDependencies": { "@logtape/logtape": "^2.2.0-dev.760+37602dc6" } }, "sha512-gCl8/ulArVYX8/nTuPXRrSapVJsg/xtOA/uqdUuIue++Eh5JTf1wE3NLIUKM6aqdQOP6yea2lmiolDxwLVoFog=="],
 
-    "@logtape/elysia": ["@logtape/elysia@2.1.1", "", { "peerDependencies": { "@logtape/logtape": "^2.1.1", "elysia": "^1.4.0" } }, "sha512-rM0bcNbVkH56IKhxRWxw+u+LMcGSJyLrOHi5Es9VRcYPrR1RstalYTtsodf9vRlz+Wm2NQYS254sO0U1Ek4E3g=="],
+    "@logtape/elysia": ["@logtape/elysia@2.2.0-dev.760", "", { "peerDependencies": { "@logtape/logtape": "^2.2.0-dev.760+37602dc6", "elysia": "^1.4.0" } }, "sha512-NeWD76ZyaxFX4F71TcxZt/AaeSWFT9hUMfep297gOe+I77dpsyFuz/pdkLrWDdY3bJTMvuBMlmAnqqIF+oomnA=="],
 
-    "@logtape/logtape": ["@logtape/logtape@2.1.1", "", {}, "sha512-aULbCqUQGerfOsZ3CMvcKtueKzmdchluXYUd3bIHKmOIS93fx1ko0+hyRQ4flloGZ8EiyRPydZXiy8n1J/eAQA=="],
+    "@logtape/logtape": ["@logtape/logtape@2.2.0-dev.760", "", {}, "sha512-D0FHrtLOQHOxnzEc5z/Hj6VVZkB9Y2+DHQAcvrcW3gM8i26c+njI3wn+VzXpk0NhSgzUwV2V4Kv6DZKzehr4aw=="],
 
     "@modelcontextprotocol/sdk": ["@modelcontextprotocol/sdk@1.29.0", "", { "dependencies": { "@hono/node-server": "^1.19.9", "ajv": "^8.17.1", "ajv-formats": "^3.0.1", "content-type": "^1.0.5", "cors": "^2.8.5", "cross-spawn": "^7.0.5", "eventsource": "^3.0.2", "eventsource-parser": "^3.0.0", "express": "^5.2.1", "express-rate-limit": "^8.2.1", "hono": "^4.11.4", "jose": "^6.1.3", "json-schema-typed": "^8.0.2", "pkce-challenge": "^5.0.0", "raw-body": "^3.0.0", "zod": "^3.25 || ^4.0", "zod-to-json-schema": "^3.25.1" }, "peerDependencies": { "@cfworker/json-schema": "^4.1.1" }, "optionalPeers": ["@cfworker/json-schema"] }, "sha512-zo37mZA9hJWpULgkRpowewez1y6ML5GsXJPY8FI0tBBCd77HEvza4jDqRKOXgHNn867PVGCyTdzqpz0izu5ZjQ=="],
 

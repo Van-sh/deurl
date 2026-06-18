@@ -31,7 +31,6 @@ const config = defineConfig(({ command }) => {
               })
             : undefined,
          viteReact(),
-         // @ts-ignore idk
          babelPlugin({
             presets: [reactCompilerPreset()],
          }),

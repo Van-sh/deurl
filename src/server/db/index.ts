@@ -20,5 +20,6 @@ export const db = drizzle({
    relations: { ...relations, ...authRelations },
    logger: getLogger({
       category: ["server", "db"],
+      dialect: "sqlite",
    }),
 });
