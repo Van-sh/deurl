@@ -22,12 +22,12 @@
       "noFallthroughCasesInSwitch": true,
       "noUncheckedSideEffectImports": true,
       "paths": {
-         "~": ["./src"],
-         "~/*": ["./src/*"],
          "~api": ["./src/server/api"],
          "~api/*": ["./src/server/api/*"],
          "~db": ["./src/server/db"],
-         "~db/*": ["./src/server/db/*"]
+         "~db/*": ["./src/server/db/*"],
+         "~": ["./src"],
+         "~/*": ["./src/*"]
       }
    }
 }

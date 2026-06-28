@@ -32,6 +32,5 @@
    "oxc.fmt.configPath": "oxfmt.config.ts",
    "search.exclude": {
       "**/routeTree.gen.ts": true
-   },
-   "typescript.native-preview.tsdk": "node_modules/@typescript/native-preview"
+   }
 }

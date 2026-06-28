@@ -4,6 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
    server: {
       NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+      LOG_LEVEL: z.enum(["trace", "debug", "info", "warning", "error", "fatal"]).optional(),
 
       BETTER_AUTH_SECRET: z.string(),
       BETTER_AUTH_URL: z.url(),
@@ -23,7 +24,6 @@ export const env = createEnv({
    client: {
       VITE_APP_NAME: z.string(),
       VITE_API_URL: z.url(),
-      VITE_LOG_LEVEL: z.enum(["trace", "debug", "info", "warning", "error", "fatal"]),
    },
 
    /**
@@ -31,13 +31,12 @@ export const env = createEnv({
     * `process.env` or `import.meta.env`.
     */
    runtimeEnv: {
-      ...process.env,
-      ...import.meta.env,
       BETTER_AUTH_URL: process.env.VITE_APP_URL,
       VITE_API_URL:
          typeof window !== "undefined" ? window.location.origin : process.env.VITE_APP_URL,
 
-      VITE_LOG_LEVEL: process.env.NODE_ENV === "development" ? "debug" : "info",
+      ...process.env,
+      ...import.meta.env,
    },
 
    /**

@@ -6,11 +6,6 @@ export default defineConfig({
    tabWidth: 3,
    trailingComma: "all",
 
-   sortTailwindcss: {
-      stylesheet: "src/styles.css",
-      functions: ["cn", "twMerge", "clsx"],
-   },
-
    sortImports: {
       internalPattern: ["~"],
       newlinesBetween: true,
@@ -24,6 +19,15 @@ export default defineConfig({
          ["side_effect_style", "style"],
          "unknown",
       ],
+   },
+
+   sortPackageJson: {
+      sortScripts: true,
+   },
+
+   sortTailwindcss: {
+      stylesheet: "src/styles.css",
+      functions: ["cn", "twMerge", "clsx"],
    },
 
    overrides: [

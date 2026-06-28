@@ -1,3 +1,4 @@
+import { getLogger } from "@logtape/logtape";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { eq, sql } from "drizzle-orm";
@@ -5,6 +6,8 @@ import { z } from "zod";
 
 import { db } from "~db";
 import { link } from "~db/schema";
+
+const logger = getLogger(["server", "redirect"]);
 
 const getRedirectUrl = createServerFn({ method: "GET" })
    .validator(
@@ -26,6 +29,8 @@ const getRedirectUrl = createServerFn({ method: "GET" })
       }
 
       const { linkId, redirectUrl } = res[0];
+
+      logger.info`Redirecting ${code} -> ${redirectUrl}`;
 
       db.update(link)
          .set({ clickCount: sql<number>`${link.clickCount} + 1` })
