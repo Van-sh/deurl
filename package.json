@@ -11,13 +11,13 @@
       "format": "oxfmt",
       "format:check": "oxfmt --check",
       "lint": "oxlint",
-      "lint:fix": "oxlint --fix",
+      "lint:fix": "oxlint --fix && oxfmt",
       "start": "bun run .output/server/index.mjs",
       "typecheck": "tsc"
    },
    "dependencies": {
       "@base-ui/react": "^1.5.0",
-      "@elysia/eden": "^1.4.10",
+      "@elysia/eden": "^2.0.0-exp.1",
       "@libsql/client": "^0.17.4",
       "@logtape/drizzle-orm": "^2.2.0",
       "@logtape/elysia": "^2.2.0",
@@ -33,7 +33,7 @@
       "class-variance-authority": "^0.7.1",
       "clsx": "^2.1.1",
       "drizzle-orm": "^1.0.0-rc.3",
-      "elysia": "^1.4.28",
+      "elysia": "^2.0.0-exp.40",
       "lucide-react": "^1.18.0",
       "nitro": "^3.0.260610-beta",
       "react": "^19.2.7",
@@ -65,7 +65,10 @@
       "oxlint-tsgolint": "^0.23.0",
       "shadcn": "^4.11.0",
       "tailwindcss": "^4.3.1",
-      "typescript": "^7.0.1-rc",
+      "typescript": "^7.0.2",
       "vite": "^8.0.16"
+   },
+   "patchedDependencies": {
+      "@logtape/elysia@2.2.0": "patches/@logtape%2Felysia@2.2.0.patch"
    }
 }

@@ -3,9 +3,7 @@ import { Plus } from "lucide-react";
 import { useId, useState, type SubmitEvent } from "react";
 import { toast } from "sonner";
 
-import { authClient } from "~/lib/auth-client";
-import { createLinkOptions, getAllLinkOptions } from "~/query/link";
-import { Button } from "./ui/button";
+import { Button } from "~/components/ui/button";
 import {
    Dialog,
    DialogContent,
@@ -13,10 +11,12 @@ import {
    DialogHeader,
    DialogTitle,
    DialogTrigger,
-} from "./ui/dialog";
-import { Field, FieldGroup, FieldLabel } from "./ui/field";
-import { Input } from "./ui/input";
-import { Spinner } from "./ui/spinner";
+} from "~/components/ui/dialog";
+import { Field, FieldGroup, FieldLabel } from "~/components/ui/field";
+import { Input } from "~/components/ui/input";
+import { Spinner } from "~/components/ui/spinner";
+import { authClient } from "~/lib/auth-client";
+import { createLinkOptions, getAllLinkOptions } from "~feat/links/queries/links.queries";
 
 export default function CreateLink() {
    const queryClient = useQueryClient();

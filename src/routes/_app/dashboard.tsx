@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { getAllLinkOptions } from "~/query/link";
-import { getSession } from "~api/modules/auth/auth.functions";
+import { getSession } from "~feat/auth/server/functions/auth.functions";
+import { getAllLinkOptions } from "~feat/links/queries/links.queries";
 
 export const Route = createFileRoute("/_app/dashboard")({
    async loader({ context }) {

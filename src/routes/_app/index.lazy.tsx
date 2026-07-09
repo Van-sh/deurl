@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { authClient } from "~/lib/auth-client";
-import { createLinkOptions } from "~/query/link";
+import { createLinkOptions } from "~feat/links/queries/links.queries";
 
 export const Route = createLazyFileRoute("/_app/")({
    component: LandingRouteComponent,
@@ -69,14 +69,14 @@ function LandingRouteComponent() {
       setError(null);
 
       const trimmed = url.trim();
-      if (!trimmed) return;
+      // if (!trimmed) return;
 
-      try {
-         new URL(trimmed);
-      } catch {
-         toast.error("Please enter a valid URL.");
-         return;
-      }
+      // try {
+      //    new URL(trimmed);
+      // } catch {
+      //    toast.error("Please enter a valid URL.");
+      //    return;
+      // }
 
       if (!session || isSessionPending) {
          return;

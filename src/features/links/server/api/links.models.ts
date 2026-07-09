@@ -8,13 +8,13 @@ const link = t.Object({
    createdAt: t.Date(),
    updatedAt: t.Date(),
 });
-export type Link = typeof link.static;
+export type Link = UnwrapSchema<typeof link>;
 
 export const LinkModels = {
    getAllLinksResponse: t.Array(link),
 
    createLinkBody: t.Object({
-      url: t.String({ format: "url" }),
+      url: t.String({ format: "url", error: "URL must be a valid URL" }),
       customCode: t.Optional(t.String()),
    }),
 

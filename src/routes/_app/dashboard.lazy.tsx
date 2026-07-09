@@ -1,8 +1,8 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-import CreateLink from "~/components/CreateLink";
-import { LinksTable } from "~/components/LinksTable";
 import { Skeleton } from "~/components/ui/skeleton";
+import CreateLink from "~feat/links/components/CreateLink";
+import { LinksTable } from "~feat/links/components/LinksTable";
 
 export const Route = createLazyFileRoute("/_app/dashboard")({
    component: DashboardRouteComponent,

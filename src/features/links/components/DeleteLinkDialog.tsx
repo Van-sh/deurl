@@ -1,4 +1,3 @@
-import type { Link } from "~api/modules/links/links.models";
 import {
    AlertDialog,
    AlertDialogAction,
@@ -8,8 +7,9 @@ import {
    AlertDialogFooter,
    AlertDialogHeader,
    AlertDialogTitle,
-} from "./ui/alert-dialog";
-import { Spinner } from "./ui/spinner";
+} from "~/components/ui/alert-dialog";
+import { Spinner } from "~/components/ui/spinner";
+import type { Link } from "../server/api/links.models";
 
 type DeleteLinkDialogProps = {
    open: boolean;

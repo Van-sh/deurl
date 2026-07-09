@@ -1,0 +1,49 @@
+diff --git a/dist/mod.js b/dist/mod.js
+index a112019a6f976965d385f78e63865d63268fad81..69260370031793399cfe74c9343c65d753e709e4 100644
+--- a/dist/mod.js
++++ b/dist/mod.js
+@@ -596,7 +596,7 @@ function elysiaLogger(options = {}) {
+ 			return await withContext(requestContext?.context ?? {}, () => handle(request));
+ 		};
+ 	});
+-	plugin = plugin.state("startTime", 0).onRequest(({ request, set, store }) => {
++	plugin = plugin.state("startTime", 0).request(({ request, set, store }) => {
+ 		const requestContext = requestContextStates.get(request);
+ 		if (requestContext == null && shouldWrapAllRoutes) {
+ 			store.startTime = performance.now();
+@@ -606,7 +606,7 @@ function elysiaLogger(options = {}) {
+ 		}
+ 		applyRequestContextToRequest(store, set, requestContext);
+ 	});
+-	if (scope === "local" && (contextOptions != null || logRequest)) plugin = plugin.onBeforeHandle(async (ctx) => {
++	if (scope === "local" && (contextOptions != null || logRequest)) plugin = plugin.beforeHandle(async (ctx) => {
+ 		ctx.store.startTime = performance.now();
+ 		const requestContext = await buildAndStoreRequestContext(ctx.request);
+ 		ctx.store.startTime = requestContext?.startTime ?? ctx.store.startTime;
+@@ -619,7 +619,7 @@ function elysiaLogger(options = {}) {
+ 		}
+ 	});
+ 	if (logRequest) {
+-		if (scope !== "local") plugin = plugin.onRequest((ctx) => {
++		if (scope !== "local") plugin = plugin.request((ctx) => {
+ 			if (!skip(ctx)) {
+ 				const requestContext = requestContextStates.get(ctx.request)?.context ?? {};
+ 				const result = withRequestLogContext(formatFn(ctx, 0), requestContext);
+@@ -627,7 +627,7 @@ function elysiaLogger(options = {}) {
+ 				else logMethod("{method} {url}", result);
+ 			}
+ 		});
+-	} else plugin = plugin.onAfterHandle((ctx) => {
++	} else plugin = plugin.afterHandle((ctx) => {
+ 		if (skip(ctx)) return;
+ 		const store = ctx.store;
+ 		const responseTime = performance.now() - store.startTime;
+@@ -636,7 +636,7 @@ function elysiaLogger(options = {}) {
+ 		if (typeof result === "string") logMethod(result, requestContext);
+ 		else logMethod("{method} {url} {status} - {responseTime} ms", result);
+ 	});
+-	plugin = plugin.onError((ctx) => {
++	plugin = plugin.error((ctx) => {
+ 		const store = ctx.store;
+ 		const responseTime = performance.now() - store.startTime;
+ 		const elysiaCtx = ctx;

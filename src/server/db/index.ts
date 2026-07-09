@@ -3,8 +3,8 @@ import "~/logtape.config";
 import { getLogger } from "@logtape/drizzle-orm";
 
 import { env } from "~/env";
+import { authRelations } from "~feat/auth/server/db/auth.schema";
 import * as schema from "./schema";
-import { authRelations } from "./schema/auth.schema";
 import { relations } from "./schema/relations";
 
 const { drizzle } = await (env.TURSO_DATABASE_URL.startsWith("file")

@@ -2,9 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useTheme } from "better-themes";
 import { Computer, Moon, Sun } from "lucide-react";
 
-import { authClient } from "~/lib/auth-client";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
 import {
    DropdownMenu,
    DropdownMenuContent,
@@ -13,9 +12,10 @@ import {
    DropdownMenuLabel,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Skeleton } from "./ui/skeleton";
-import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+} from "~/components/ui/dropdown-menu";
+import { Skeleton } from "~/components/ui/skeleton";
+import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
+import { authClient } from "~/lib/auth-client";
 
 export default function UserArea() {
    const { theme, setTheme } = useTheme();

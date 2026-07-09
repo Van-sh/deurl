@@ -1,6 +1,6 @@
-import { createTable } from "../utils/table";
-import { timestamps } from "../utils/timestamp.schema";
-import { user } from "./auth.schema";
+import { user } from "~db/schema";
+import { createTable } from "~db/utils/table";
+import { timestamps } from "~db/utils/timestamp.schema";
 
 export const link = createTable("link", (t) => ({
    id: t.integer().primaryKey(),

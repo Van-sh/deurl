@@ -26,6 +26,7 @@
          "~api/*": ["./src/server/api/*"],
          "~db": ["./src/server/db"],
          "~db/*": ["./src/server/db/*"],
+         "~feat/*": ["./src/features/*"],
          "~": ["./src"],
          "~/*": ["./src/*"]
       }

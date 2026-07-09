@@ -2,9 +2,9 @@ import { Copy, CopyCheck, ExternalLink, Pencil, Trash2 } from "lucide-react";
 import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
-import type { Link } from "~api/modules/links/links.models";
-import { Button } from "./ui/button";
-import { TableCell, TableRow } from "./ui/table";
+import { Button } from "~/components/ui/button";
+import { TableCell, TableRow } from "~/components/ui/table";
+import type { Link } from "../server/api/links.models";
 
 type LinksTableRowProps = {
    link: Link;

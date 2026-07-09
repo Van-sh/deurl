@@ -1,7 +1,7 @@
 import Elysia, { StatusMap } from "elysia";
 
 import type { ResponseSchema } from "~api/types";
-import { authPlugin } from "../auth/auth.plugin";
+import { authPlugin } from "~feat/auth/server/api/auth.plugin";
 import { LinkModels } from "./links.models";
 import { LinkService } from "./links.service";
 
@@ -10,22 +10,29 @@ export const linksRouter = new Elysia({
    prefix: "/links",
 })
    .use(authPlugin)
-   .guard({ auth: true })
+   .guard({ schema: "standalone", auth: true })
    .get(
       "/",
-      async ({ user, status }) => {
-         const links = await LinkService.getAllLinksForUser(user.id);
-
-         return status("OK", links);
-      },
       {
          response: {
             [StatusMap["OK"]]: LinkModels.getAllLinksResponse,
          } satisfies ResponseSchema,
       },
+      async ({ user, status }) => {
+         const links = await LinkService.getAllLinksForUser(user.id);
+
+         return status("OK", links);
+      },
    )
    .post(
       "/",
+      {
+         body: LinkModels.createLinkBody,
+         response: {
+            [StatusMap["OK"]]: LinkModels.linkSuccess,
+            [StatusMap["Forbidden"]]: LinkModels.createLinkForbidden,
+         },
+      },
       async ({ body, user, status }) => {
          if (user.isAnonymous) {
             if (body.customCode) {
@@ -40,16 +47,17 @@ export const linksRouter = new Elysia({
          const newLink = await LinkService.registerUrl(user.id, body.url, body.customCode);
          return status("OK", newLink);
       },
-      {
-         body: LinkModels.createLinkBody,
-         response: {
-            [StatusMap["OK"]]: LinkModels.linkSuccess,
-            [StatusMap["Forbidden"]]: LinkModels.createLinkForbidden,
-         },
-      },
    )
    .patch(
       "/:id",
+      {
+         params: LinkModels.linkIdParams,
+         body: LinkModels.createLinkBody,
+         response: {
+            [StatusMap["OK"]]: LinkModels.linkSuccess,
+            [StatusMap["Forbidden"]]: LinkModels.editLinkForbidden,
+         },
+      },
       async ({ params, body, user, status }) => {
          const linkId = params.id;
 
@@ -71,26 +79,18 @@ export const linksRouter = new Elysia({
 
          return status("OK", editedLink);
       },
-      {
-         params: LinkModels.linkIdParams,
-         body: LinkModels.createLinkBody,
-         response: {
-            [StatusMap["OK"]]: LinkModels.linkSuccess,
-            [StatusMap["Forbidden"]]: LinkModels.editLinkForbidden,
-         },
-      },
    )
    .delete(
       "/:id",
-      async ({ params, user, status }) => {
-         await LinkService.deleteLinkForUser(user.id, params.id);
-
-         return status("OK", { message: "Link deleted" });
-      },
       {
          params: LinkModels.linkIdParams,
          response: {
             [StatusMap["OK"]]: LinkModels.deleteLinkSuccess,
          } satisfies ResponseSchema,
+      },
+      async ({ params, user, status }) => {
+         await LinkService.deleteLinkForUser(user.id, params.id);
+
+         return status("OK", { message: "Link deleted" });
       },
    );

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { env } from "~/env";
-import UserArea from "./UserArea";
+import UserArea from "~feat/auth/components/UserArea";
 
 export default function Header() {
    return (

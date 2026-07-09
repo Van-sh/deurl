@@ -4,7 +4,7 @@ import { elysiaLogger } from "@logtape/elysia";
 import Elysia from "elysia";
 
 import { env } from "~/env";
-import { linksRouter } from "./modules/links";
+import { linksRouter } from "~feat/links/server/api/links";
 
 export const app = new Elysia({
    prefix: "/api",

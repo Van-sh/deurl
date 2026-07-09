@@ -2,7 +2,7 @@ import { and, eq, getColumns } from "drizzle-orm";
 
 import { db } from "~/server/db";
 import { link } from "~/server/db/schema";
-import { toBase64Url } from "~api/lib/toBase64Url";
+import { toBase64Url } from "~feat/links/lib/toBase64Url";
 
 const { userId: _, ...linkColumns } = getColumns(link);
 

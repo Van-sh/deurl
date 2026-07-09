@@ -1,7 +1,7 @@
 import { defineRelationsPart, sql } from "drizzle-orm";
 import { index, integer, text } from "drizzle-orm/sqlite-core";
 
-import { createTable } from "../utils/table";
+import { createTable } from "~db/utils/table";
 
 export const user = createTable("user", {
    id: text("id").primaryKey(),

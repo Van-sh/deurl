@@ -8,12 +8,7 @@ export const getAllLinkOptions = queryOptions({
    async queryFn() {
       const { data, error } = await api().links.get();
       if (error) {
-         switch (error.status) {
-            case 401:
-               throw new Error(error.value.message);
-            case 422:
-               throw new Error(error.value.summary);
-         }
+         throw new Error(error.value.message);
       }
 
       return data;
@@ -40,8 +35,11 @@ export const createLinkOptions = (onSuccess: () => void, onError: (error: Error)
                case 403:
                   throw new Error(error.value.message);
                case 422:
-                  throw new Error(error.value.summary);
+                  throw new Error(error.value.detail);
                default:
+                  console.log(
+                     `Unknown Error Code while creating the link: ${error satisfies never}`,
+                  );
                   throw new Error("Something went wrong while creating the link.");
             }
          }
@@ -61,7 +59,12 @@ export const deleteLinkOptions = (onSuccess: () => void, onError: (error: Error)
             switch (error.status) {
                case 401:
                   throw new Error(error.value.message);
+               case 422:
+                  throw new Error(error.value.detail);
                default:
+                  console.log(
+                     `Unknown Error Code while deleting the link: ${error satisfies never}`,
+                  );
                   throw new Error("Something went wrong while deleting the link.");
             }
          }
@@ -86,8 +89,11 @@ export const editLinkOptions = (onSuccess: () => void, onError: (error: Error) =
                case 403:
                   throw new Error(error.value.message);
                case 422:
-                  throw new Error(error.value.summary);
+                  throw new Error(error.value.detail);
                default:
+                  console.log(
+                     `Unknown Error Code while updating the link: ${error satisfies never}`,
+                  );
                   throw new Error("Something went wrong while updating data.");
             }
          }

@@ -2,13 +2,17 @@ import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-q
 import { useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { authClient } from "~/lib/auth-client";
-import { deleteLinkOptions, editLinkOptions, getAllLinkOptions } from "~/query/link";
-import type { Link } from "~api/modules/links/links.models";
+import {
+   deleteLinkOptions,
+   editLinkOptions,
+   getAllLinkOptions,
+} from "~feat/links/queries/links.queries";
+import type { Link } from "../server/api/links.models";
 import DeleteLinkDialog from "./DeleteLinkDialog";
 import EditLinkDialog from "./EditLinkDialog";
 import LinksTableRow from "./LinksTableRow";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 
 export function LinksTable() {
    const queryClient = useQueryClient();

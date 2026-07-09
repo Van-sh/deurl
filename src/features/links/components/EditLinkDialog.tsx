@@ -1,5 +1,4 @@
-import type { Link } from "~api/modules/links/links.models";
-import { Button } from "./ui/button";
+import { Button } from "~/components/ui/button";
 import {
    Dialog,
    DialogClose,
@@ -7,10 +6,11 @@ import {
    DialogFooter,
    DialogHeader,
    DialogTitle,
-} from "./ui/dialog";
-import { Field, FieldGroup, FieldLabel } from "./ui/field";
-import { Input } from "./ui/input";
-import { Spinner } from "./ui/spinner";
+} from "~/components/ui/dialog";
+import { Field, FieldGroup, FieldLabel } from "~/components/ui/field";
+import { Input } from "~/components/ui/input";
+import { Spinner } from "~/components/ui/spinner";
+import type { Link } from "../server/api/links.models";
 
 type EditLinkDialogProps = {
    open: boolean;
