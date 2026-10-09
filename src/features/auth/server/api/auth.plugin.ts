@@ -1,16 +1,16 @@
-import { Elysia, StatusMap, t } from "elysia";
+import { Elysia, problem, StatusMap, t } from "elysia";
 
 import { auth } from "~/lib/auth";
 import type { ResponseSchema } from "~/server/api/types";
 
 export const authPlugin = new Elysia({ name: "better-auth" }).macro({
    auth: {
-      async derive({ status, request: { headers } }) {
+      async derive({ request: { headers } }) {
          const session = await auth.api.getSession({
             headers,
          });
 
-         if (!session) throw status("Unauthorized", { message: "Unauthorized" });
+         if (!session) return problem("Unauthorized", { detail: "Unauthorized" });
 
          return {
             user: session.user,
@@ -18,7 +18,7 @@ export const authPlugin = new Elysia({ name: "better-auth" }).macro({
          };
       },
       response: {
-         [StatusMap["Unauthorized"]]: t.Object({ message: t.Literal("Unauthorized") }),
+         [StatusMap["Unauthorized"]]: t.Problem({ detail: t.Literal("Unauthorized") }),
       } satisfies ResponseSchema,
    },
 });

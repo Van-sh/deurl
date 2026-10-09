@@ -12,13 +12,13 @@ export default defineConfig({
       builtin: true,
    },
    ignorePatterns: ["**/vite.config.*.timestamp-*.*", ".output/*", "migrations/**"],
+   jsPlugins: [{ name: "@logtape", specifier: "@logtape/lint/eslint" }],
    rules: {
       "@logtape/no-message-interpolation": "error",
       "@logtape/prefer-lazy-evaluation": "warn",
       "@logtape/no-unawaited-log": "error",
       "@logtape/require-meta-sink": "warn",
    },
-   jsPlugins: [{ name: "@logtape", specifier: "@logtape/lint/eslint" }],
    overrides: [
       {
          files: ["**/*.{js,ts,tsx}"],

@@ -8,7 +8,7 @@ export const getAllLinkOptions = queryOptions({
    async queryFn() {
       const { data, error } = await api().links.get();
       if (error) {
-         throw new Error(error.value.message);
+         throw new Error(error.value.detail);
       }
 
       return data;
@@ -33,7 +33,6 @@ export const createLinkOptions = (onSuccess: () => void, onError: (error: Error)
             switch (error.status) {
                case 401:
                case 403:
-                  throw new Error(error.value.message);
                case 422:
                   throw new Error(error.value.detail);
                default:
@@ -58,7 +57,6 @@ export const deleteLinkOptions = (onSuccess: () => void, onError: (error: Error)
          if (error) {
             switch (error.status) {
                case 401:
-                  throw new Error(error.value.message);
                case 422:
                   throw new Error(error.value.detail);
                default:
@@ -87,7 +85,6 @@ export const editLinkOptions = (onSuccess: () => void, onError: (error: Error) =
             switch (error.status) {
                case 401:
                case 403:
-                  throw new Error(error.value.message);
                case 422:
                   throw new Error(error.value.detail);
                default:

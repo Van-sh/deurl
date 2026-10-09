@@ -19,15 +19,15 @@ export const LinkModels = {
    }),
 
    linkSuccess: link,
-   createLinkForbidden: t.Object({
-      message: t.Union([
+   createLinkForbidden: t.Problem({
+      detail: t.Union([
          t.Literal("Anonymous Users cannot add custom codes"),
          t.Literal("Anonymous Users can only have one URL"),
       ]),
    }),
 
-   editLinkForbidden: t.Object({
-      message: t.Union([
+   editLinkForbidden: t.Problem({
+      detail: t.Union([
          t.Literal("Anonymous Users cannot edit custom codes"),
          t.Literal("You don't own this link"),
       ]),

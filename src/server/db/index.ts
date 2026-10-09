@@ -4,7 +4,6 @@ import { getLogger } from "@logtape/drizzle-orm";
 
 import { env } from "~/env";
 import { authRelations } from "~feat/auth/server/db/auth.schema";
-import * as schema from "./schema";
 import { relations } from "./schema/relations";
 
 const { drizzle } = await (env.TURSO_DATABASE_URL.startsWith("file")
@@ -16,7 +15,6 @@ export const db = drizzle({
       url: env.TURSO_DATABASE_URL,
       authToken: env.TURSO_AUTH_TOKEN,
    },
-   schema,
    relations: { ...relations, ...authRelations },
    logger: getLogger({
       category: ["server", "db"],

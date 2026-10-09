@@ -13,7 +13,7 @@ const config = defineConfig(({ command }) => {
          tsconfigPaths: true,
       },
       server: {
-         port: 3435,
+         port: 3000,
       },
       optimizeDeps: {
          exclude: ["drizzle-orm/libsql/node"],

@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 
 import { env } from "~/env";
 import { db } from "~db";
-import { link } from "~db/schema";
+import * as schema from "~db/schema";
 
 const envToLogger = {
    development: {
@@ -28,6 +28,7 @@ export const auth = betterAuth({
    baseURL: env.BETTER_AUTH_URL,
    database: drizzleAdapter(db, {
       provider: "sqlite",
+      schema,
    }),
    socialProviders: {
       google: {
@@ -39,12 +40,15 @@ export const auth = betterAuth({
       anonymous({
          async onLinkAccount({ anonymousUser, newUser }) {
             await db
-               .update(link)
+               .update(schema.link)
                .set({ userId: newUser.user.id })
-               .where(eq(link.userId, anonymousUser.user.id));
+               .where(eq(schema.link.userId, anonymousUser.user.id));
          },
       }),
       tanstackStartCookies(),
    ],
    logger: envToLogger[env.NODE_ENV],
+   advanced: {
+      database: { validateSchema: false },
+   },
 });

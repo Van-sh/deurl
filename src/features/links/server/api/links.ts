@@ -1,4 +1,4 @@
-import Elysia, { StatusMap } from "elysia";
+import Elysia, { problem, StatusMap } from "elysia";
 
 import type { ResponseSchema } from "~api/types";
 import { authPlugin } from "~feat/auth/server/api/auth.plugin";
@@ -10,7 +10,7 @@ export const linksRouter = new Elysia({
    prefix: "/links",
 })
    .use(authPlugin)
-   .guard({ schema: "standalone", auth: true })
+   .guard({ schema: "merge", auth: true })
    .get(
       "/",
       {
@@ -36,11 +36,11 @@ export const linksRouter = new Elysia({
       async ({ body, user, status }) => {
          if (user.isAnonymous) {
             if (body.customCode) {
-               throw status("Forbidden", { message: "Anonymous Users cannot add custom codes" });
+               return problem("Forbidden", { detail: "Anonymous Users cannot add custom codes" });
             }
             const linkCount = await LinkService.getLinkCountForUser(user.id);
             if (linkCount >= 1) {
-               throw status("Forbidden", { message: "Anonymous Users can only have one URL" });
+               return problem("Forbidden", { detail: "Anonymous Users can only have one URL" });
             }
          }
 
@@ -63,13 +63,13 @@ export const linksRouter = new Elysia({
 
          const thisLink = await LinkService.getLinkForUser(user.id, linkId);
          if (!thisLink) {
-            throw status("Forbidden", { message: "You don't own this link" });
+            return problem("Forbidden", { detail: "You don't own this link" });
          }
 
          let editedLink;
          if (user.isAnonymous) {
             if (body.customCode) {
-               throw status("Forbidden", { message: "Anonymous Users cannot edit custom codes" });
+               return problem("Forbidden", { detail: "Anonymous Users cannot edit custom codes" });
             }
 
             editedLink = await LinkService.editLink(user.id, linkId, body.url);
