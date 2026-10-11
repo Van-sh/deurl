@@ -4,16 +4,16 @@
    "type": "module",
    "scripts": {
       "build": "bun x --bun vite build",
-      "check": "bun --parallel --no-exit-on-error format:check lint typecheck",
+      "check:all": "bun --parallel --no-exit-on-error format:check lint:check types:check",
       "cn": "shadcn",
       "db": "bun x --bun drizzle-kit",
       "dev": "NODE_ENV=development bun x --bun vite dev",
       "format": "oxfmt",
       "format:check": "oxfmt --check",
-      "lint": "oxlint",
-      "lint:fix": "oxlint --fix && oxfmt",
+      "lint:check": "oxlint",
+      "lint:fix": "oxlint --fix && bun run format",
       "start": "bun run .output/server/index.mjs",
-      "typecheck": "tsc"
+      "types:check": "bun check"
    },
    "dependencies": {
       "@base-ui/react": "^1.9.0",
@@ -64,7 +64,6 @@
       "oxlint-tsgolint": "^7.0.2003",
       "shadcn": "^4.21.4",
       "tailwindcss": "^4.3.3",
-      "typescript": "^7.0.2",
       "vite": "^8.3.4"
    }
 }
