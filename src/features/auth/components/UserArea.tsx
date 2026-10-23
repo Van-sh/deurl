@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTheme } from "better-themes";
 import { Computer, Moon, Sun } from "lucide-react";
 
@@ -18,6 +18,8 @@ import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import { authClient } from "~/lib/auth-client";
 
 export default function UserArea() {
+   const navigate = useNavigate();
+
    const { theme, setTheme } = useTheme();
    const { data: session, isPending } = authClient.useSession();
    const user = session?.user;
@@ -36,6 +38,11 @@ export default function UserArea() {
 
    const isAnonymous = user.isAnonymous;
    const initial = user.name.charAt(0).toUpperCase() || "U";
+
+   async function logout() {
+      await authClient.signOut();
+      navigate({ to: ".", replace: true });
+   }
 
    return (
       <DropdownMenu>
@@ -90,7 +97,7 @@ export default function UserArea() {
                   Open dashboard
                </DropdownMenuItem>
                {!isAnonymous && (
-                  <DropdownMenuItem onClick={() => authClient.signOut()} className="cursor-pointer">
+                  <DropdownMenuItem onClick={logout} className="cursor-pointer">
                      Log Out
                   </DropdownMenuItem>
                )}

@@ -1,6 +1,7 @@
 import "@tanstack/react-start/server-only";
 
-import { betterAuth, type Logger } from "better-auth";
+import { getLogger } from "@logtape/logtape";
+import { betterAuth, type LogLevel } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { anonymous } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
@@ -10,18 +11,7 @@ import { env } from "~/env";
 import { db } from "~db";
 import * as schema from "~db/schema";
 
-const envToLogger = {
-   development: {
-      disabled: false,
-      level: "debug",
-   },
-   production: {
-      disabled: false,
-   },
-   test: {
-      disabled: true,
-   },
-} as const satisfies Record<typeof env.NODE_ENV, Logger>;
+const betterAuthlogger = getLogger(["server", "better-auth"]);
 
 export const auth = betterAuth({
    secret: env.BETTER_AUTH_SECRET,
@@ -47,7 +37,13 @@ export const auth = betterAuth({
       }),
       tanstackStartCookies(),
    ],
-   logger: envToLogger[env.NODE_ENV],
+   logger: {
+      disabled: false,
+      level: env.NODE_ENV === "production" ? "info" : "debug",
+      log(level: Exclude<LogLevel, "success">, message: string, ...args: any[]) {
+         betterAuthlogger[level](message, { args });
+      },
+   },
    advanced: {
       database: { validateSchema: false },
    },
