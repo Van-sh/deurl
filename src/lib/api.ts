@@ -15,3 +15,5 @@ export const api = createIsomorphicFn()
             },
          }).api,
    );
+
+export type Api = ReturnType<typeof api>;

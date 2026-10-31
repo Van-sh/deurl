@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_app/dashboard")({
          throw redirect({ to: "/login" });
       }
 
-      await context.queryClient.prefetchQuery(getAllLinkOptions);
+      await context.queryClient.query(getAllLinkOptions);
       return {};
    },
 });
